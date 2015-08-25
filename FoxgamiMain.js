@@ -1,5 +1,6 @@
 'use strict';
 
+let timeago = require('timeago');
 let React = require('react-native');
 let {
   AppRegistry,
@@ -47,7 +48,8 @@ class FoxgamiMain extends React.Component {
           style={styles.storyImage}
           source={{uri: story.image_url}}
         />
-        <Text style={styles.medium}>{story.title}</Text>
+        <Text style={[styles.medium, styles.baseText]}>{story.title}</Text>
+        <Text style={[styles.small, styles.baseText]}>posted {timeago(story.submitted_at)}</Text>
       </View>
       );
   }
@@ -76,6 +78,9 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#212121',
   },
+  baseText: {
+    fontFamily: 'Gill Sans'
+  },
   icon: {
     alignItems: 'center',
     width: 32,
@@ -84,10 +89,8 @@ let styles = StyleSheet.create({
     marginTop: 24,
   },
   storyImage: {
-    flex: 1,
-    alignItems: 'center',
-    height: 374,
-    width: 374,
+    height: 384,
+    width: 384,
   },
   logo: {
     color: '#eeeee',
@@ -98,12 +101,16 @@ let styles = StyleSheet.create({
     color: '#eeeeee',
   },
   small: {
-    fontSize: 12,
-    color: '#eeeeee',
+    fontSize: 13,
+    color: '#565656',
+    marginLeft: 12,
+    marginRight: 12,
+    marginBottom: 24,
   },
   medium: {
-    fontSize: 15,
+    fontSize: 16,
     margin: 12,
+    marginBottom: 6,
     color: '#eeeeee',
   },
   large: {

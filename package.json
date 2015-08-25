@@ -3,5 +3,8 @@
   "version": "0.0.0",
   "description": "Foxgami Daily Delight",
   "main": "main.js",
-  "author": "albert.sheu@gmail.com"
+  "author": "albert.sheu@gmail.com",
+  "dependencies": {
+    "timeago": "^0.2.0"
+  }
 }
