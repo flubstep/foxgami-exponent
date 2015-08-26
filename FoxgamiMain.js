@@ -71,6 +71,13 @@ class FoxgamiMain extends React.Component {
   }
 }
 
+let white = '#ffffff';
+let dark = '#212121';
+let light = '#A6A6A6';
+let subdued = '#565656';
+let orange = '#D63B27';
+let green = '#2CA866';
+let purple = '#5B79B0';
 
 let styles = StyleSheet.create({
   container: {
@@ -93,16 +100,16 @@ let styles = StyleSheet.create({
     width: 384,
   },
   logo: {
-    color: '#eeeee',
+    color: white,
     fontSize: 15,
   },
   xsmall: {
     fontSize: 10,
-    color: '#eeeeee',
+    color: white,
   },
   small: {
     fontSize: 13,
-    color: '#565656',
+    color: subdued,
     marginLeft: 12,
     marginRight: 12,
     marginBottom: 24,
@@ -111,7 +118,7 @@ let styles = StyleSheet.create({
     fontSize: 16,
     margin: 12,
     marginBottom: 6,
-    color: '#eeeeee',
+    color: white,
   },
   large: {
 
