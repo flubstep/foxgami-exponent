@@ -9,9 +9,12 @@ let {
   View,
   Image,
   ListView,
+  StatusBarIOS,
 } = React;
 
 let REQUEST_URL = 'http://www.foxgami.com/api/stories';
+
+StatusBarIOS.setStyle(1)
 
 class FoxgamiMain extends React.Component {
 
@@ -56,17 +59,19 @@ class FoxgamiMain extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.icon}
-          source={{uri: "http://www.foxgami.com/client/resources/logo_large.png"}}
-        />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this._renderStory}
-          style={styles.small}
-        />
-      </View>
+        <View style={styles.container}>
+          <View style={styles.feed}>
+            <Image
+              style={styles.iconNavLogo}
+              source={{uri: "http://www.foxgami.com/client/resources/logo_large.png"}}
+            />
+            <ListView
+              dataSource={this.state.dataSource}
+              renderRow={this._renderStory}
+              style={styles.small}
+            />
+          </View>
+        </View>
     );
   }
 }
@@ -81,14 +86,19 @@ let purple = '#5B79B0';
 
 let styles = StyleSheet.create({
   container: {
+    backgroundColor: '#000000',
     flex: 1,
+  },
+  feed: {
     alignItems: 'center',
-    backgroundColor: '#212121',
+    backgroundColor: dark,
+    borderRadius: 6,
+    flex: 1,
   },
   baseText: {
-    fontFamily: 'Gill Sans'
+    fontFamily: 'Gill Sans',
   },
-  icon: {
+  iconNavLogo: {
     alignItems: 'center',
     width: 32,
     height: 32,
