@@ -16,9 +16,9 @@ let {
 
 let FoxgamiStory = require('./FoxgamiStory');
 let FoxgamiNav = require('./FoxgamiNav');
+let FoxgamiApi = require('FoxgamiApi');
 let SignupLogin = require('./SignupLogin');
 let {Colors} = require('./BaseStyles');
-let REQUEST_URL = 'http://www.foxgami.com/api/stories';
 
 StatusBarIOS.setStyle(1);
 
@@ -39,8 +39,7 @@ class FoxgamiMain extends React.Component {
   }
 
   _fetchData() {
-    fetch(REQUEST_URL)
-      .then((response) => response.json())
+    FoxgamiApi.get('/stories')
       .then((responseData) => {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(responseData),
