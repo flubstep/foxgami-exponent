@@ -17,6 +17,8 @@ let FBSDKCore = require('react-native-fbsdkcore');
 let {FBSDKGraphRequest} = FBSDKCore;
 let FacebookLoginManager = require('NativeModules').FacebookLoginManager;
 
+let MenubarUser = require('MenubarUser');
+
 class FoxgamiNav extends React.Component {
 
   constructor() {
@@ -48,10 +50,9 @@ class FoxgamiNav extends React.Component {
             style={styles.iconNavLogo}
             source={require('./images/logo.png')}
           />
-          <TouchableHighlight style={styles.loginContainer} onPress={() => this._login()}>
-            <Text style={styles.loginText}>LOG IN</Text>
-          </TouchableHighlight>
+          <MenubarUser />
         </View>
+
       </View>
     );
   }
@@ -67,7 +68,7 @@ let styles = StyleSheet.create({
     paddingLeft: 12
   },
   invisible: {
-    color: Colors.dark
+    color: Colors.white
   },
   iconNavLogo: {
     alignItems: 'center',

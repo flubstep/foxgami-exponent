@@ -14,9 +14,11 @@ let {
   Modal
 } = React;
 
+
+let FoxgamiApi = require('FoxgamiApi');
+
 let FoxgamiStory = require('./FoxgamiStory');
 let FoxgamiNav = require('./FoxgamiNav');
-let FoxgamiApi = require('FoxgamiApi');
 let SignupLogin = require('./SignupLogin');
 let {Colors} = require('./BaseStyles');
 
