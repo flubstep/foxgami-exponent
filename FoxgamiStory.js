@@ -567,7 +567,7 @@ let styles = StyleSheet.create({
   header: {
     position: 'absolute',
     top: 0,
-    paddingTop: 32,
+    paddingTop: 16,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
