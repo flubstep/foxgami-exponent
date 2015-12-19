@@ -22,7 +22,7 @@ let FoxgamiNav = require('./FoxgamiNav');
 let SignupLogin = require('./SignupLogin');
 let {Colors} = require('./BaseStyles');
 
-StatusBarIOS.setStyle(1);
+StatusBarIOS.setHidden(true);
 
 class FoxgamiMain extends React.Component {
 

@@ -58,6 +58,8 @@ class FoxgamiNav extends React.Component {
   }
 }
 
+let navHeight = 24;
+
 let styles = StyleSheet.create({
   container: {
     width: 375, // TODO: make this responsive
@@ -72,10 +74,9 @@ let styles = StyleSheet.create({
   },
   iconNavLogo: {
     alignItems: 'center',
-    width: 28,
-    height: 28, // TODO: match this downstairs
-    margin: 10,
-    marginTop: 26
+    width: navHeight,
+    height: navHeight, // TODO: match this downstairs
+    margin: 10
   },
   loginText: {
     color: 'white',
@@ -85,7 +86,7 @@ let styles = StyleSheet.create({
   },
   loginContainer: {
     marginTop: 20, // TODO: fix this
-    height: 28, // TODO: make this a variable
+    height: navHeight, // TODO: make this a variable
     alignItems: 'center',
     flexDirection: 'row'
   }
