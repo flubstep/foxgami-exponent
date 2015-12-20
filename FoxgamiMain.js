@@ -1,3 +1,7 @@
+/**
+ * @providesModule FoxgamiMain
+ */
+
 'use strict';
 
 let timeago = require('timeago');
@@ -17,10 +21,10 @@ let {
 
 let FoxgamiApi = require('FoxgamiApi');
 
-let FoxgamiStory = require('./FoxgamiStory');
-let FoxgamiNav = require('./FoxgamiNav');
-let SignupLogin = require('./SignupLogin');
-let {Colors} = require('./BaseStyles');
+let FoxgamiStory = require('FoxgamiStory');
+let FoxgamiNav = require('FoxgamiNav');
+let SignupLogin = require('SignupLogin');
+let {Colors} = require('BaseStyles');
 
 StatusBarIOS.setHidden(true);
 
@@ -80,7 +84,7 @@ class FoxgamiMain extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.feed}>
-          <FoxgamiNav/>
+          <FoxgamiNav navigator={this.props.navigator}/>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}

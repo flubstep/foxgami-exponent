@@ -20,7 +20,8 @@ let {
   View,
 } = React;
 
-let FoxgamiMain = require('./FoxgamiMain');
+let FoxgamiMain = require('FoxgamiMain');
+let SignupLogin = require('SignupLogin');
 
 class FoxgamiNative extends React.Component {
 

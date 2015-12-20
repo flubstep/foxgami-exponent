@@ -1,3 +1,7 @@
+/**
+ * @providesModule FoxgamiNav
+ */
+
 'use strict';
 
 let React = require('react-native');
@@ -11,7 +15,7 @@ let {
   Modal
 } = React;
 
-let {Colors} = require('./BaseStyles');
+let {Colors} = require('BaseStyles');
 
 let FBSDKCore = require('react-native-fbsdkcore');
 let {FBSDKGraphRequest} = FBSDKCore;
@@ -50,7 +54,7 @@ class FoxgamiNav extends React.Component {
             style={styles.iconNavLogo}
             source={require('./images/logo.png')}
           />
-          <MenubarUser />
+          <MenubarUser navigator={this.props.navigator}/>
         </View>
 
       </View>

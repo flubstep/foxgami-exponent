@@ -1,3 +1,7 @@
+/**
+ * @providesModule FoxgamiStory
+ */
+
 'use strict';
 
 let React = require('react-native');
@@ -29,8 +33,8 @@ let {
 
 let TimerMixin = require('react-timer-mixin');
 
-let {Colors} = require('./BaseStyles');
-let FoxgamiNav = require('./FoxgamiNav');
+let {Colors} = require('BaseStyles');
+let FoxgamiNav = require('FoxgamiNav');
 let Firebase = require('firebase');
 
 

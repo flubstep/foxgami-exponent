@@ -1,3 +1,8 @@
+/**
+ * @providesModule BaseStyles
+ */
+
+
 var Colors = {
   white: '#ffffff',
   darker: '#212121',

@@ -14,8 +14,9 @@ let {
   TouchableHighlight
 } = React;
 
-let {Colors} = require('./BaseStyles');
+let {Colors} = require('BaseStyles');
 let FoxgamiApi = require('FoxgamiApi');
+let SignupLogin = require('SignupLogin');
 
 class MenubarUser extends React.Component {
 
@@ -45,7 +46,10 @@ class MenubarUser extends React.Component {
   }
 
   _login() {
-
+    this.props.navigator.push({
+      title: "Signup",
+      component: SignupLogin
+    });
   }
 
   _renderWaiting() {
@@ -84,6 +88,13 @@ class MenubarUser extends React.Component {
 let styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+  },
+  loginText: {
+    fontFamily: 'Gill Sans',
+    letterSpacing: 1,
+    fontWeight: '500',
+    fontSize: 12,
+    color: "#BABABA"
   },
   iconNavLogo: {
     alignItems: 'center',

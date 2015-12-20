@@ -17,7 +17,7 @@ function get(path, query = {}) {
 }
 
 function getCurrentUser() {
-    return get('/users', {token: '1234'});
+    return get('/users');
 }
 
 Object.assign(module.exports, {
