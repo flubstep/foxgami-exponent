@@ -11,7 +11,8 @@ let {
   Text,
   View,
   Image,
-  TextInput
+  TextInput,
+  TouchableHighlight
 } = React;
 
 let {Colors} = require('BaseStyles');
@@ -23,6 +24,20 @@ class SignupLogin extends React.Component {
     this.state = {
       textEmail: '',
       textPassword: ''
+    }
+  }
+
+  _renderLoginButton() {
+    if (this.state.textEmail && this.state.textPassword) {
+      return (
+        <TouchableHighlight
+          style={styles.loginButton}
+          >
+          <Text style={styles.loginText}>LOG IN</Text>
+        </TouchableHighlight>
+      );
+    } else {
+      return null;
     }
   }
 
@@ -43,7 +58,7 @@ class SignupLogin extends React.Component {
             value={this.state.textEmail}
             placeholder={"E-mail"}
             autoFocus={true}
-            autoCapitalize={false}
+            autoCapitalize={"none"}
             autoCorrect={false}
             keyboardType={'email-address'}
           />
@@ -54,11 +69,12 @@ class SignupLogin extends React.Component {
             onChangeText={(textPassword) => this.setState({textPassword})}
             value={this.state.textPassword}
             placeholder={"Password"}
-            autoCapitalize={false}
+            autoCapitalize={"none"}
             autoCorrect={false}
             secureTextEntry={true}
           />
         </View>
+        {this._renderLoginButton()}
       </View>
     );
   }
@@ -68,6 +84,22 @@ let styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginTop: 175
+  },
+  loginButton: {
+    height: 40,
+    width: 295,
+    marginTop: 36,
+    borderRadius: 20,
+    backgroundColor: Colors.darker,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  loginText: {
+    fontSize: 12,
+    letterSpacing: 1,
+    fontWeight: '700',
+    color: Colors.white
   },
   inputField: {
     height: 48,
@@ -79,7 +111,7 @@ let styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomColor: '#EEEEEE',
+    borderBottomColor: Colors.lightGray,
     borderBottomWidth: 2
   },
   iconNavLogo: {

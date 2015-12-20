@@ -12,6 +12,7 @@ var Colors = {
   orange: '#D63B27',
   green: '#2CA866',
   purple: '#5B79B0',
+  lightGray: '#EEEEEE',
 }
 
 module.exports = {
