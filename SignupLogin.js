@@ -27,6 +27,23 @@ class SignupLogin extends React.Component {
     }
   }
 
+  _goBack() {
+    this.props.navigator.pop();
+  }
+
+  _renderBackButton() {
+    return (
+      <TouchableHighlight
+        onPress={() => {this._goBack()}}
+      >
+        <Image
+          style={styles.backButton}
+          source={require('./images/CancelGray.png')}
+        />
+      </TouchableHighlight>
+    );
+  }
+
   _renderLoginButton() {
     if (this.state.textEmail && this.state.textPassword) {
       return (
@@ -37,8 +54,31 @@ class SignupLogin extends React.Component {
         </TouchableHighlight>
       );
     } else {
-      return null;
+      return (
+        <View style={styles.placeholderButton}>
+        </View>
+      );
     }
+  }
+
+  _renderSignupLink() {
+    return (
+      <TouchableHighlight
+        style={styles.signupButton}
+        >
+        <Text style={styles.signupText}>SIGN UP</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  _renderTermsLink() {
+    return (
+      <TouchableHighlight
+        style={styles.signupButton}
+        >
+        <Text style={styles.signupText}>TERMS</Text>
+      </TouchableHighlight>
+    );
   }
 
   render() {
@@ -51,43 +91,76 @@ class SignupLogin extends React.Component {
     */
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(textEmail) => this.setState({textEmail})}
-            value={this.state.textEmail}
-            placeholder={"E-mail"}
-            autoFocus={true}
-            autoCapitalize={"none"}
-            autoCorrect={false}
-            keyboardType={'email-address'}
-          />
+        <View style={styles.topNavigation}>
+          {this._renderBackButton()}
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputField}
-            onChangeText={(textPassword) => this.setState({textPassword})}
-            value={this.state.textPassword}
-            placeholder={"Password"}
-            autoCapitalize={"none"}
-            autoCorrect={false}
-            secureTextEntry={true}
-          />
+        <View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(textEmail) => this.setState({textEmail})}
+              value={this.state.textEmail}
+              placeholder={"E-mail"}
+              autoFocus={true}
+              autoCapitalize={"none"}
+              autoCorrect={false}
+              keyboardType={'email-address'}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputField}
+              onChangeText={(textPassword) => this.setState({textPassword})}
+              value={this.state.textPassword}
+              placeholder={"Password"}
+              autoCapitalize={"none"}
+              autoCorrect={false}
+              secureTextEntry={true}
+            />
+          </View>
+          {this._renderLoginButton()}
         </View>
-        {this._renderLoginButton()}
+        <View style={styles.bottomNavigation}>
+          {this._renderTermsLink()}
+          {this._renderSignupLink()}
+        </View>
       </View>
     );
   }
 }
 
+let MARGIN = 40;
+
 let styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
-    marginTop: 175
+    justifyContent: 'space-between'
+  },
+  topNavigation: {
+    marginTop: MARGIN,
+    width: 375 - MARGIN*2,
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  bottomNavigation: {
+    marginBottom: MARGIN,
+    width: 375 - MARGIN*2,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  backButton: {
+    height: 24,
+    width: 24,
+  },
+  placeholderButton: {
+    height: 40,
+    width: 375 - MARGIN*2,
+    marginTop: 36
   },
   loginButton: {
     height: 40,
-    width: 295,
+    width: 375 - MARGIN*2,
     marginTop: 36,
     borderRadius: 20,
     backgroundColor: Colors.darker,
@@ -101,6 +174,15 @@ let styles = StyleSheet.create({
     fontWeight: '700',
     color: Colors.white
   },
+  signupText: {
+    fontSize: 12,
+    letterSpacing: 1,
+    fontWeight: '700',
+    color: Colors.darker
+  },
+  signupButton: {
+
+  },
   inputField: {
     height: 48,
     width: 295,
@@ -109,8 +191,6 @@ let styles = StyleSheet.create({
     fontWeight: '500'
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     borderBottomColor: Colors.lightGray,
     borderBottomWidth: 2
   },
