@@ -87,7 +87,7 @@ class MenubarUser extends React.Component {
 
 let styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   loginText: {
     fontFamily: 'Gill Sans',
