@@ -24,6 +24,7 @@ let FoxgamiApi = require('FoxgamiApi');
 let FoxgamiStory = require('FoxgamiStory');
 let FoxgamiNav = require('FoxgamiNav');
 let SignupLogin = require('SignupLogin');
+let IconButton = require('IconButton');
 let {Colors} = require('BaseStyles');
 
 StatusBarIOS.setHidden(true);
@@ -63,9 +64,13 @@ class FoxgamiMain extends React.Component {
     });
   }
 
+  _doNothing() {
+
+  }
+
   _renderStory(story) {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <TouchableHighlight
           style={styles.wrapper}
           onPress={() => this._selectStory(story)}>
@@ -75,7 +80,25 @@ class FoxgamiMain extends React.Component {
           />
         </TouchableHighlight>
         <Text style={[styles.medium, styles.baseText]}>{story.title}</Text>
-        <Text style={[styles.small, styles.baseText]}>posted {timeago(story.submitted_at)}</Text>
+        <View style={styles.storyRow}>
+          <View style={styles.storyRowInfo}>
+            <Text style={[styles.small, styles.baseText]}>5 reactions</Text>
+          </View>
+          <View style={styles.storyRowIcons}>
+            <IconButton
+              onPress={this._doNothing.bind(this)}
+              source={require('./images/ShareGray.png')}
+              />
+            <IconButton
+              onPress={this._doNothing.bind(this)}
+              source={require('./images/SmilieGray.png')}
+              />
+            <IconButton
+              onPress={this._doNothing.bind(this)}
+              source={require('./images/LikeGray.png')}
+              />
+          </View>
+        </View>
       </View>
       );
   }
@@ -134,6 +157,18 @@ let styles = StyleSheet.create({
     marginBottom: 6,
     color: Colors.dark,
   },
+  storyRow: {
+    marginTop: 4,
+    width: 375 - (12*2),
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  storyRowIcons: {
+    flexDirection: 'row'
+  },
+  storyRowInfo: {
+
+  }
 });
 
 module.exports = FoxgamiMain;
