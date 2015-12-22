@@ -35,6 +35,7 @@ let TimerMixin = require('react-timer-mixin');
 
 let {Colors} = require('BaseStyles');
 let FoxgamiNav = require('FoxgamiNav');
+let IconButton = require('IconButton');
 let Firebase = require('firebase');
 
 
@@ -135,19 +136,6 @@ class Reaction {
     let point = this.gestures[gestureIndex][pointIndex];
     this.replayedGestures[gestureIndex].push(point);
     return false;
-  }
-}
-
-
-class IconButton extends React.Component {
-
-  render() {
-    // let imageStyle = this.props.location == "right" ? styles.iconRight : styles.iconLeft;
-    return (
-      <TouchableOpacity style={styles.iconButton} onPress={this.props.onPress}>
-        <Image style={styles.icon} source={this.props.source} />
-      </TouchableOpacity>
-    )
   }
 }
 
@@ -581,13 +569,6 @@ let styles = StyleSheet.create({
   headerRight: {
     flexDirection: 'row',
     marginRight: 8,
-  },
-  icon: {
-    marginLeft: 16,
-    marginRight: 16,
-  },
-  iconButton: {
-    height: 32,
   },
   headerLeft: {
     flexDirection: 'row',
