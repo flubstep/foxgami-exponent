@@ -35,8 +35,7 @@ let iconSize = 48;
 
 let styles = StyleSheet.create({
   icon: {
-    marginLeft: 16,
-    marginRight: 16,
+    marginLeft: 24
   },
   iconButton: {
     height: 32,

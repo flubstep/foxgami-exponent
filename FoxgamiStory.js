@@ -568,7 +568,7 @@ let styles = StyleSheet.create({
   },
   headerRight: {
     flexDirection: 'row',
-    marginRight: 8,
+    marginRight: 8 + 12,
   },
   headerLeft: {
     flexDirection: 'row',
