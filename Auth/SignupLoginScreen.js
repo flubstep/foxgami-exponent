@@ -12,7 +12,8 @@ let {
   View,
   Image,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } = React;
 
 let {Colors} = require('BaseStyles');
@@ -22,6 +23,7 @@ class SignupLoginScreen extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
+      textUsername: '',
       textEmail: '',
       textPassword: ''
     }
@@ -33,19 +35,17 @@ class SignupLoginScreen extends React.Component {
 
   _renderBackButton() {
     return (
-      <TouchableHighlight
-        onPress={() => {this._goBack()}}
-      >
+      <TouchableOpacity onPress={this._onPressButton}>
         <Image
           style={styles.backButton}
           source={require('../images/CancelGray.png')}
         />
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 
   _renderLoginButton() {
-    if (this.state.textEmail && this.state.textPassword) {
+    if (this.state.textUsername && this.state.textEmail && this.state.textPassword) {
       return (
         <TouchableHighlight
           style={styles.loginButton}
@@ -96,6 +96,18 @@ class SignupLoginScreen extends React.Component {
         </View>
         <View>
           <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputField}
+                onChangeText={(textUsername) => this.setState({textUsername})}
+                value={this.state.textUsername}
+                placeholder={"Full Name"}
+                autoFocus={true}
+                autoCapitalize={'words'}
+                autoCorrect={false}
+                keyboardType={'default'}
+            />
+          </View>
+          <View style={styles.inputContainer}>
             <TextInput
               style={styles.inputField}
               onChangeText={(textEmail) => this.setState({textEmail})}
@@ -138,20 +150,20 @@ let styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   topNavigation: {
-    marginTop: MARGIN,
-    width: 375 - MARGIN*2,
+    marginTop: MARGIN/2,
+    width: 375 - MARGIN,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   bottomNavigation: {
     marginBottom: MARGIN,
-    width: 375 - MARGIN*2,
+    width: 375 - MARGIN,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
   backButton: {
-    height: 24,
-    width: 24,
+    height: 16,
+    width: 16
   },
   placeholderButton: {
     height: 40,
