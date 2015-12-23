@@ -32,7 +32,8 @@ class FoxgamiNative extends React.Component {
         navigationBarHidden={true}
         initialRoute={{
           title: 'Foxgami',
-          component: FoxgamiMain
+          //component: FoxgamiMain
+          component: SignupLogin
         }}
       />
     );
