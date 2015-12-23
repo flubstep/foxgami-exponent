@@ -1,5 +1,5 @@
 /**
- * @providesModule SignupLogin
+ * @providesModule SignupLoginScreen
  */
 
 'use strict';
@@ -18,7 +18,7 @@ let {
 
 let {Colors} = require('BaseStyles');
 
-class SignupLogin extends React.Component {
+class SignupLoginScreen extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -38,7 +38,7 @@ class SignupLogin extends React.Component {
       <TouchableOpacity onPress={this._onPressButton}>
         <Image
           style={styles.backButton}
-          source={require('./images/CancelGray.png')}
+          source={require('../images/CancelGray.png')}
         />
       </TouchableOpacity>
     );
@@ -215,4 +215,4 @@ let styles = StyleSheet.create({
   },
 });
 
-module.exports = SignupLogin;
+module.exports = SignupLoginScreen;

@@ -1,5 +1,5 @@
 /**
- * @providesModule FoxgamiNav
+ * @providesModule NavigationBar
  */
 
 'use strict';
@@ -15,15 +15,15 @@ let {
   Modal
 } = React;
 
-let {Colors} = require('BaseStyles');
-
 let FBSDKCore = require('react-native-fbsdkcore');
 let {FBSDKGraphRequest} = FBSDKCore;
 let FacebookLoginManager = require('NativeModules').FacebookLoginManager;
 
-let MenubarUser = require('MenubarUser');
+let {Colors} = require('BaseStyles');
 
-class FoxgamiNav extends React.Component {
+let NavigationBarUser = require('NavigationBarUser');
+
+class NavigationBar extends React.Component {
 
   constructor() {
     super();
@@ -52,9 +52,9 @@ class FoxgamiNav extends React.Component {
           <Text style={styles.invisible}>Login</Text>
           <Image
             style={styles.iconNavLogo}
-            source={require('./images/logo.png')}
+            source={require('../images/logo.png')}
           />
-          <MenubarUser navigator={this.props.navigator}/>
+          <NavigationBarUser navigator={this.props.navigator}/>
         </View>
 
       </View>
@@ -96,4 +96,4 @@ let styles = StyleSheet.create({
   }
 });
 
-module.exports = FoxgamiNav;
+module.exports = NavigationBar;
