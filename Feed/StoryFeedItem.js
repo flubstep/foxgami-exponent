@@ -1,5 +1,5 @@
 /**
- * @providesModule FeedStory
+ * @providesModule StoryFeedItem
  */
 
 'use strict';
@@ -19,12 +19,13 @@ let {
 } = React;
 
 
-let FoxgamiApi = require('FoxgamiApi');
-let FoxgamiStory = require('FoxgamiStory');
-let IconButton = require('IconButton');
 let {Colors} = require('BaseStyles');
+let FoxgamiApi = require('FoxgamiApi');
 
-class FeedStory extends React.Component {
+let StoryScreen = require('StoryScreen');
+let IconButton = require('IconButton');
+
+class StoryFeedItem extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -53,7 +54,7 @@ class FeedStory extends React.Component {
   _selectStory() {
     this.props.navigator.push({
       title: this.props.story.title,
-      component: FoxgamiStory,
+      component: StoryScreen,
       passProps: {story: this.props.story}
     });
   }
@@ -77,15 +78,15 @@ class FeedStory extends React.Component {
           <View style={styles.storyRowIcons}>
             <IconButton
               onPress={this._doNothing.bind(this)}
-              source={require('./images/ShareGray.png')}
+              source={require('../images/ShareGray.png')}
               />
             <IconButton
               onPress={this._doNothing.bind(this)}
-              source={require('./images/SmilieGray.png')}
+              source={require('../images/SmilieGray.png')}
               />
             <IconButton
               onPress={this._doNothing.bind(this)}
-              source={require('./images/LikeGray.png')}
+              source={require('../images/LikeGray.png')}
               />
           </View>
         </View>
@@ -133,4 +134,4 @@ let styles = StyleSheet.create({
   }
 });
 
-module.exports = FeedStory;
+module.exports = StoryFeedItem;

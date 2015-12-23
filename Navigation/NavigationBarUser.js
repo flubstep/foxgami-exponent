@@ -1,5 +1,5 @@
 /**
- * @providesModule MenubarUser
+ * @providesModule NavigationBarUser
  */
 
 'use strict';
@@ -16,9 +16,10 @@ let {
 
 let {Colors} = require('BaseStyles');
 let FoxgamiApi = require('FoxgamiApi');
-let SignupLogin = require('SignupLogin');
 
-class MenubarUser extends React.Component {
+let SignupLoginScreen = require('SignupLoginScreen');
+
+class NavigationBarUser extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -48,7 +49,7 @@ class MenubarUser extends React.Component {
   _login() {
     this.props.navigator.push({
       title: "Signup",
-      component: SignupLogin
+      component: SignupLoginScreen
     });
   }
 
@@ -105,4 +106,4 @@ let styles = StyleSheet.create({
   },
 });
 
-module.exports = MenubarUser;
+module.exports = NavigationBarUser;

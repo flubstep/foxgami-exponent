@@ -1,5 +1,5 @@
 /**
- * @providesModule FoxgamiMain
+ * @providesModule StoryFeedScreen
  */
 
 'use strict';
@@ -19,17 +19,17 @@ let {
 } = React;
 
 
+let {Colors} = require('BaseStyles');
 let FoxgamiApi = require('FoxgamiApi');
 
-let FoxgamiStory = require('FoxgamiStory');
-let FoxgamiNav = require('FoxgamiNav');
-let SignupLogin = require('SignupLogin');
-let FeedStory = require('FeedStory');
-let {Colors} = require('BaseStyles');
+let StoryScreen = require('StoryScreen');
+let SignupLoginScreen = require('SignupLoginScreen');
+let NavigationBar = require('NavigationBar');
+let StoryFeedItem = require('StoryFeedItem');
 
 StatusBarIOS.setHidden(true);
 
-class FoxgamiMain extends React.Component {
+class StoryFeedScreen extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -58,7 +58,7 @@ class FoxgamiMain extends React.Component {
 
   _renderStory(story) {
     return (
-      <FeedStory story={story} navigator={this.props.navigator} />
+      <StoryFeedItem story={story} navigator={this.props.navigator} />
     );
   }
 
@@ -66,7 +66,7 @@ class FoxgamiMain extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.feed}>
-          <FoxgamiNav navigator={this.props.navigator}/>
+          <NavigationBar navigator={this.props.navigator}/>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}
@@ -114,4 +114,4 @@ let styles = StyleSheet.create({
   }
 });
 
-module.exports = FoxgamiMain;
+module.exports = StoryFeedScreen;

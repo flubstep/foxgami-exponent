@@ -20,8 +20,8 @@ let {
   View,
 } = React;
 
-let FoxgamiMain = require('FoxgamiMain');
-let SignupLogin = require('SignupLogin');
+let StoryFeedScreen = require('StoryFeedScreen');
+let SignupLoginScreen = require('SignupLoginScreen');
 
 class FoxgamiNative extends React.Component {
 
@@ -32,7 +32,7 @@ class FoxgamiNative extends React.Component {
         navigationBarHidden={true}
         initialRoute={{
           title: 'Foxgami',
-          component: FoxgamiMain
+          component: StoryFeedScreen
         }}
       />
     );

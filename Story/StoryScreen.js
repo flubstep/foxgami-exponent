@@ -1,5 +1,5 @@
 /**
- * @providesModule FoxgamiStory
+ * @providesModule StoryScreen
  */
 
 'use strict';
@@ -34,14 +34,11 @@ let {
 let TimerMixin = require('react-timer-mixin');
 
 let {Colors} = require('BaseStyles');
-let FoxgamiNav = require('FoxgamiNav');
-let IconButton = require('IconButton');
 let FoxgamiApi = require('FoxgamiApi');
 let Firebase = require('firebase');
-
-
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
 
+let IconButton = require('IconButton');
 
 function pointsToSvg(points) {
   if (points.length > 0) {
@@ -125,7 +122,7 @@ class Reaction {
   }
 }
 
-class FoxgamiStoryHeader extends React.Component {
+class StoryScreenHeader extends React.Component {
 
   _handlePulldown() {
     this.props.navigator.pop();
@@ -145,19 +142,19 @@ class FoxgamiStoryHeader extends React.Component {
         <View style={styles.headerLeft}>
           <IconButton
             onPress={this._handlePulldown.bind(this)}
-            source={require('./images/Pulldown.png')}
+            source={require('../images/Pulldown.png')}
             location={"left"}
             />
         </View>
         <View style={styles.headerRight}>
           <IconButton
             onPress={this._handleDraw.bind(this)}
-            source={require('./images/Smilie.png')}
+            source={require('../images/Smilie.png')}
             location={"right"}
             />
           <IconButton
             onPress={this._handleShare.bind(this)}
-            source={require('./images/Share.png')}
+            source={require('../images/Share.png')}
             location={"right"}
             />
         </View>
@@ -187,19 +184,19 @@ class FoxgamiDrawHeader extends React.Component {
         <View style={styles.headerLeft}>
           <IconButton
             onPress={this._handleCancel.bind(this)}
-            source={require('./images/Cancel.png')}
+            source={require('../images/Cancel.png')}
             location={"left"}
             />
         </View>
         <View style={styles.headerRight}>
           <IconButton
             onPress={this._handleUndo.bind(this)}
-            source={require('./images/Undo.png')}
+            source={require('../images/Undo.png')}
             location={"right"}
             />
           <IconButton
             onPress={this._handleDone.bind(this)}
-            source={require('./images/Done.png')}
+            source={require('../images/Done.png')}
             location={"right"}
           />
         </View>
@@ -350,7 +347,7 @@ var FoxgamiReplaySurface = React.createClass({
             <Shape key={this.state.currentMax} d={pointsToSvg(this.state.currentPoints)} stroke="#FFFFFF" strokeWidth={8} />
           </Group>
         </Surface>
-        <FoxgamiStoryHeader
+        <StoryScreenHeader
           startDrawing={this.props.startDrawing}
           share={this.props.playReaction}
           navigator={this.props.navigator}
@@ -411,7 +408,7 @@ class FoxgamiReactionPlayerList extends React.Component {
 }
 
 
-class FoxgamiStory extends React.Component {
+class StoryScreen extends React.Component {
 
   constructor(props, context) {
     super(props, context);
@@ -594,4 +591,4 @@ let styles = StyleSheet.create({
 
 });
 
-module.exports = FoxgamiStory;
+module.exports = StoryScreen;
