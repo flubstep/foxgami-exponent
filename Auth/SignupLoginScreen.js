@@ -84,6 +84,7 @@ class SignupLoginScreen extends React.Component {
   render() {
     /*
       X out to return to main feed
+      full name input field
       email input field
       password input field
       forgot password link
@@ -94,15 +95,15 @@ class SignupLoginScreen extends React.Component {
         <View style={styles.topNavigation}>
           {this._renderBackButton()}
         </View>
-        <View>
+        <View style={styles.form}>
           <View style={styles.inputContainer}>
               <TextInput
                 style={styles.inputField}
                 onChangeText={(textUsername) => this.setState({textUsername})}
                 value={this.state.textUsername}
-                placeholder={"Full Name"}
+                placeholder={"Username"}
                 autoFocus={true}
-                autoCapitalize={'words'}
+                autoCapitalize={'none'}
                 autoCorrect={false}
                 keyboardType={'default'}
             />
@@ -114,7 +115,7 @@ class SignupLoginScreen extends React.Component {
               value={this.state.textEmail}
               placeholder={"E-mail"}
               autoFocus={true}
-              autoCapitalize={"none"}
+              autoCapitalize={'none'}
               autoCorrect={false}
               keyboardType={'email-address'}
             />
@@ -141,78 +142,96 @@ class SignupLoginScreen extends React.Component {
   }
 }
 
-let MARGIN = 40;
+let MARGIN = 8;
 
 let styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between'
   },
+
   topNavigation: {
-    marginTop: MARGIN/2,
-    width: 375 - MARGIN,
+    marginTop: MARGIN*2,
+    width: 375 - MARGIN*4,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
+
   bottomNavigation: {
-    marginBottom: MARGIN,
-    width: 375 - MARGIN,
+    marginBottom: MARGIN*2,
+    width: 375 - MARGIN*4,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   backButton: {
     height: 16,
     width: 16
   },
+
   placeholderButton: {
-    height: 40,
-    width: 375 - MARGIN*2,
+    height: 48,
+    width: 375 - MARGIN*8,
     marginTop: 36
   },
+
+  form: {
+    marginTop: -MARGIN*10
+  },
+
   loginButton: {
-    height: 40,
-    width: 375 - MARGIN*2,
+    borderRadius: 24,
+    height: 48,
+    width: 375 - MARGIN*8,
     marginTop: 36,
-    borderRadius: 20,
     backgroundColor: Colors.darker,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
+
   loginText: {
     fontSize: 12,
     letterSpacing: 1,
     fontWeight: '700',
     color: Colors.white
   },
+
   signupText: {
+    color: Colors.darker,
     fontSize: 12,
     letterSpacing: 1,
-    fontWeight: '700',
-    color: Colors.darker
+    fontWeight: '700'
   },
+
   signupButton: {
 
   },
+
   inputField: {
     height: 48,
-    width: 295,
     fontFamily: 'Gill Sans',
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
+    paddingTop: 16,
+    width: 375 - MARGIN*8
   },
+
   inputContainer: {
     borderBottomColor: Colors.lightGray,
     borderBottomWidth: 2
   },
+
   iconNavLogo: {
     alignItems: 'center',
     width: 28,
     height: 28,
     margin: 10,
     marginTop: 26,
-  },
+  }
+
 });
 
 module.exports = SignupLoginScreen;
