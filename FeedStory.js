@@ -26,6 +26,26 @@ let {Colors} = require('BaseStyles');
 
 class FeedStory extends React.Component {
 
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      numReactions: 0
+    };
+  }
+
+  componentDidMount() {
+    this._fetchData();
+  }
+
+  _fetchData() {
+    FoxgamiApi.subscribeReaction(this.props.story.id, (reactions) => {
+      let numReactions = reactions.length;
+      this.setState({
+        numReactions
+      });
+    });
+  }
+
   _doNothing() {
 
   }
@@ -34,7 +54,7 @@ class FeedStory extends React.Component {
     this.props.navigator.push({
       title: this.props.story.title,
       component: FoxgamiStory,
-      passProps: {story: story}
+      passProps: {story: this.props.story}
     });
   }
 
@@ -52,7 +72,7 @@ class FeedStory extends React.Component {
         <Text style={[styles.medium, styles.baseText]}>{this.props.story.title}</Text>
         <View style={styles.storyRow}>
           <View style={styles.storyRowInfo}>
-            <Text style={[styles.small, styles.baseText]}>5 reactions</Text>
+            <Text style={[styles.small, styles.baseText]}>{this.state.numReactions} reactions</Text>
           </View>
           <View style={styles.storyRowIcons}>
             <IconButton

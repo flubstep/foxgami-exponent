@@ -58,7 +58,7 @@ class FoxgamiMain extends React.Component {
 
   _renderStory(story) {
     return (
-      <FeedStory story={story} />
+      <FeedStory story={story} navigator={this.props.navigator} />
     );
   }
 
@@ -69,7 +69,7 @@ class FoxgamiMain extends React.Component {
           <FoxgamiNav navigator={this.props.navigator}/>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={this._renderStory}
+            renderRow={this._renderStory.bind(this)}
           />
         </View>
       </View>
