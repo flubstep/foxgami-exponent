@@ -18,6 +18,7 @@ let {Colors} = require('BaseStyles');
 let FoxgamiApi = require('FoxgamiApi');
 
 let SignupLoginScreen = require('SignupLoginScreen');
+let ProfileScreen = require('ProfileScreen');
 
 class NavigationBarUser extends React.Component {
 
@@ -53,6 +54,13 @@ class NavigationBarUser extends React.Component {
     });
   }
 
+  _goProfile() {
+    this.props.navigator.push({
+      title: "Profile",
+      component: ProfileScreen
+    });
+  }
+
   _renderWaiting() {
     return (
       <Text style={styles.loginText}>Loading...</Text>
@@ -69,7 +77,7 @@ class NavigationBarUser extends React.Component {
 
   _renderUser() {
     return (
-      <TouchableHighlight style={styles.loginContainer} onPress={() => this._login()}>
+      <TouchableHighlight style={styles.loginContainer} onPress={() => this._goProfile()}>
         <Text style={styles.loginText}>{this.state.shortName}</Text>
       </TouchableHighlight>
     );
