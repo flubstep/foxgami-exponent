@@ -36,6 +36,7 @@ let TimerMixin = require('react-timer-mixin');
 let {Colors} = require('BaseStyles');
 let FoxgamiNav = require('FoxgamiNav');
 let IconButton = require('IconButton');
+let FoxgamiApi = require('FoxgamiApi');
 let Firebase = require('firebase');
 
 
@@ -53,21 +54,6 @@ function pointsToSvg(points) {
     return '';
   }
 }
-
-
-function objectToArray(obj) {
-  if (!obj) {
-    return [];
-  }
-  var ret = [];
-  var ii = 0;
-  while (typeof(obj[ii]) !== "undefined") {
-    ret.push(obj[ii]);
-    ii++;
-  }
-  return ret;
-}
-
 
 let Modes = {
   viewing: 1,
@@ -438,19 +424,16 @@ class FoxgamiStory extends React.Component {
   }
 
   componentDidMount() {
-    this.firebaseRef.on('value', ((container) => {
-      let reactionsRaw = objectToArray(container.val());
+    FoxgamiApi.subscribeReaction(this.props.story.id, (reactionsRaw) => {
       let reactions = reactionsRaw.map(
-        (rawObj) => {
-          let rawList = objectToArray(rawObj);
-          console.log(rawList);
-          return new Reaction(rawList);
+        (reactionList) => {
+          return new Reaction(reactionList);
         }
       );
       this.setState({
-        reactions: reactions
+        reactions
       });
-    }));
+    });
   }
 
   _saveReaction(reaction) {
