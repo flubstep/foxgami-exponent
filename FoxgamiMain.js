@@ -24,7 +24,7 @@ let FoxgamiApi = require('FoxgamiApi');
 let FoxgamiStory = require('FoxgamiStory');
 let FoxgamiNav = require('FoxgamiNav');
 let SignupLogin = require('SignupLogin');
-let IconButton = require('IconButton');
+let FeedStory = require('FeedStory');
 let {Colors} = require('BaseStyles');
 
 StatusBarIOS.setHidden(true);
@@ -56,51 +56,10 @@ class FoxgamiMain extends React.Component {
       .done();
   }
 
-  _selectStory(story) {
-    this.props.navigator.push({
-      title: story.title,
-      component: FoxgamiStory,
-      passProps: {story: story}
-    });
-  }
-
-  _doNothing() {
-
-  }
-
   _renderStory(story) {
     return (
-      <View style={{flex: 1}}>
-        <TouchableHighlight
-          style={styles.wrapper}
-          onPress={() => this._selectStory(story)}>
-          <Image
-            style={styles.storyImage}
-            source={{uri: story.image_url}}
-          />
-        </TouchableHighlight>
-        <Text style={[styles.medium, styles.baseText]}>{story.title}</Text>
-        <View style={styles.storyRow}>
-          <View style={styles.storyRowInfo}>
-            <Text style={[styles.small, styles.baseText]}>5 reactions</Text>
-          </View>
-          <View style={styles.storyRowIcons}>
-            <IconButton
-              onPress={this._doNothing.bind(this)}
-              source={require('./images/ShareGray.png')}
-              />
-            <IconButton
-              onPress={this._doNothing.bind(this)}
-              source={require('./images/SmilieGray.png')}
-              />
-            <IconButton
-              onPress={this._doNothing.bind(this)}
-              source={require('./images/LikeGray.png')}
-              />
-          </View>
-        </View>
-      </View>
-      );
+      <FeedStory story={story} />
+    );
   }
 
   render() {
@@ -110,7 +69,7 @@ class FoxgamiMain extends React.Component {
           <FoxgamiNav navigator={this.props.navigator}/>
           <ListView
             dataSource={this.state.dataSource}
-            renderRow={this._renderStory.bind(this)}
+            renderRow={this._renderStory}
           />
         </View>
       </View>
@@ -132,10 +91,6 @@ let styles = StyleSheet.create({
   baseText: {
     fontFamily: 'Gill Sans',
   },
-  storyImage: {
-    height: 375,
-    width: 375,
-  },
   logo: {
     color: Colors.white,
     fontSize: 15,
@@ -156,18 +111,6 @@ let styles = StyleSheet.create({
     margin: 12,
     marginBottom: 6,
     color: Colors.dark,
-  },
-  storyRow: {
-    marginTop: 4,
-    width: 375 - (12*2),
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  storyRowIcons: {
-    flexDirection: 'row'
-  },
-  storyRowInfo: {
-
   }
 });
 
