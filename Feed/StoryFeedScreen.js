@@ -24,6 +24,7 @@ let FoxgamiApi = require('FoxgamiApi');
 
 let StoryScreen = require('StoryScreen');
 let SignupLoginScreen = require('SignupLoginScreen');
+let ProfileScreen = require('ProfileScreen');
 let NavigationBar = require('NavigationBar');
 let StoryFeedItem = require('StoryFeedItem');
 
@@ -56,6 +57,20 @@ class StoryFeedScreen extends React.Component {
       .done();
   }
 
+  _showLogin() {
+    this.props.navigator.push({
+      title: "Signup",
+      component: SignupLoginScreen
+    });
+  }
+
+  _showProfile() {
+    this.props.navigator.push({
+      title: "Profile",
+      component: ProfileScreen
+    });
+  }
+
   _renderStory(story) {
     return (
       <StoryFeedItem story={story} navigator={this.props.navigator} />
@@ -66,7 +81,12 @@ class StoryFeedScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.feed}>
-          <NavigationBar navigator={this.props.navigator} showUser={true}/>
+          <NavigationBar
+            navigator={this.props.navigator}
+            showUser={true}
+            onLogin={this._showLogin.bind(this)}
+            onProfile={this._showProfile.bind(this)}
+          />
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}

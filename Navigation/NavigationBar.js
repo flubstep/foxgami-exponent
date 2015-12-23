@@ -25,26 +25,38 @@ let NavigationBarUser = require('NavigationBarUser');
 
 class NavigationBar extends React.Component {
 
+  _renderUser() {
+    if (this.props.showUser) {
+      return (
+        <NavigationBarUser
+          onProfile={this.props.onProfile}
+          onLogin={this.props.onLogin}
+          navigator={this.props.navigator}
+          />
+      );
+    } else {
+      return (
+        <Text style={styles.invisible}>Login</Text>
+      );
+    }
+  }
+
   render() {
     return (
       <View>
         <View style={styles.container}>
-          {this.props.showUser ? (<Text style={styles.invisible}>Login</Text>) : null}
+          <Text style={styles.invisible}>Login</Text>
           <Image
             style={styles.iconNavLogo}
             source={require('../images/logo.png')}
           />
-          {this.props.showUser ? (<NavigationBarUser navigator={this.props.navigator}/>) : null}
+          {this._renderUser()}
         </View>
 
       </View>
     );
   }
 }
-
-NavigationBar.defaultProps = {
-  showUser: false
-};
 
 let navHeight = 24;
 

@@ -19,6 +19,7 @@ let {
 let {Colors} = require('BaseStyles');
 
 let NavigationBar = require('NavigationBar');
+let IconButton = require('IconButton');
 
 class ProfileScreen extends React.Component {
 
@@ -29,6 +30,12 @@ class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <NavigationBar
+          navigator={this.props.navigator}
+          showUser={false}
+          onProfile={null}
+          onLogin={null}
+        />
         <Text>Profile Screen Placeholder</Text>
         <TouchableOpacity onPress={this._goBack.bind(this)}>
           <Text>GO BACK</Text>
