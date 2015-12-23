@@ -25,36 +25,16 @@ let NavigationBarUser = require('NavigationBarUser');
 
 class NavigationBar extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      isModalOpen: false
-    };
-  }
-
-  _login() {
-    // TODO: show the nav for facebook whatever
-    this.openModal();
-  }
-
-  openModal() {
-    this.setState({isModalOpen: true});
-  }
-
-  closeModal() {
-    this.setState({isModalOpen: false});
-  }
-
   render() {
     return (
       <View>
         <View style={styles.container}>
-          <Text style={styles.invisible}>Login</Text>
+          {this.props.showUser ? (<Text style={styles.invisible}>Login</Text>) : null}
           <Image
             style={styles.iconNavLogo}
             source={require('../images/logo.png')}
           />
-          <NavigationBarUser navigator={this.props.navigator}/>
+          {this.props.showUser ? (<NavigationBarUser navigator={this.props.navigator}/>) : null}
         </View>
 
       </View>
@@ -62,11 +42,15 @@ class NavigationBar extends React.Component {
   }
 }
 
+NavigationBar.defaultProps = {
+  showUser: false
+};
+
 let navHeight = 24;
 
 let styles = StyleSheet.create({
   container: {
-    width: 375, // TODO: make this responsive
+    width: 375, // TODO: make this flex 1
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -79,7 +63,7 @@ let styles = StyleSheet.create({
   iconNavLogo: {
     alignItems: 'center',
     width: navHeight,
-    height: navHeight, // TODO: match this downstairs
+    height: navHeight,
     margin: 10
   },
   loginText: {
@@ -90,7 +74,7 @@ let styles = StyleSheet.create({
   },
   loginContainer: {
     marginTop: 20, // TODO: fix this
-    height: navHeight, // TODO: make this a variable
+    height: navHeight,
     alignItems: 'center',
     flexDirection: 'row'
   }

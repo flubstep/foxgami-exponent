@@ -66,7 +66,7 @@ class StoryFeedScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.feed}>
-          <NavigationBar navigator={this.props.navigator}/>
+          <NavigationBar navigator={this.props.navigator} showUser={true}/>
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}
