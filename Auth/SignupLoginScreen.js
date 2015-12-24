@@ -35,7 +35,7 @@ class SignupLoginScreen extends React.Component {
 
   _renderBackButton() {
     return (
-      <TouchableOpacity onPress={this._onPressButton}>
+      <TouchableOpacity onPress={this._goBack.bind(this)}>
         <Image
           style={styles.backButton}
           source={require('../images/CancelGray.png')}

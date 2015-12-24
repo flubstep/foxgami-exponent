@@ -12,16 +12,22 @@ let rootRef = new Firebase('https://foxgami.firebaseio.com/');
 
 
 function get(path, query = {}) {
-    let REQUEST_URL = REQUEST_BASE + path;
-    if (query) {
-        REQUEST_URL += '?' + stringify(query);
-    }
-    return fetch(REQUEST_URL).then((response) => { return response.json() });
+  let REQUEST_URL = REQUEST_BASE + path;
+  if (query) {
+    REQUEST_URL += '?' + stringify(query);
+  }
+  return fetch(REQUEST_URL).then((response) => { return response.json() });
 }
 
 
+// AUTHENTICATION
+
 function getCurrentUser() {
-    return get('/users');
+  return get('/users', {token: '1234'});
+}
+
+function subscribeCurrentUser() {
+  // TODO
 }
 
 
