@@ -7,6 +7,8 @@
 let React = require('react-native');
 let {
   AppRegistry,
+  DeviceEventEmitter,
+  Dimensions,
   StyleSheet,
   Text,
   View,
@@ -18,6 +20,8 @@ let {
 
 let {Colors} = require('BaseStyles');
 
+let IconButton = require('IconButton');
+
 class SignupLoginScreen extends React.Component {
 
   constructor(props, context) {
@@ -25,21 +29,37 @@ class SignupLoginScreen extends React.Component {
     this.state = {
       textUsername: '',
       textEmail: '',
-      textPassword: ''
+      textPassword: '',
+      visibleHeight: Dimensions.get('window').height
     }
   }
 
-  _goBack() {
+  componentWillMount () {
+    DeviceEventEmitter.addListener('keyboardWillShow', this.keyboardWillShow.bind(this))
+    DeviceEventEmitter.addListener('keyboardWillHide', this.keyboardWillHide.bind(this))
+  }
+
+  keyboardWillShow (e) {
+    let newSize = Dimensions.get('window').height - e.endCoordinates.height
+    this.setState({visibleHeight: newSize})
+  }
+
+  keyboardWillHide (e) {
+    this.setState({visibleHeight: Dimensions.get('window').height})
+  }
+
+  _back() {
     this.props.navigator.pop();
   }
 
   _renderBackButton() {
     return (
-      <TouchableOpacity onPress={this._goBack.bind(this)}>
-        <Image
+      <TouchableOpacity onPress={this._onPressButton}>
+        <IconButton
           style={styles.backButton}
-          source={require('../images/CancelGray.png')}
-        />
+          onPress={this._back.bind(this)}
+          source={require('../images/Back.png')}
+          />
       </TouchableOpacity>
     );
   }
@@ -47,9 +67,7 @@ class SignupLoginScreen extends React.Component {
   _renderLoginButton() {
     if (this.state.textUsername && this.state.textEmail && this.state.textPassword) {
       return (
-        <TouchableHighlight
-          style={styles.loginButton}
-          >
+        <TouchableHighlight style={styles.loginButton}>
           <Text style={styles.loginText}>LOG IN</Text>
         </TouchableHighlight>
       );
@@ -63,9 +81,7 @@ class SignupLoginScreen extends React.Component {
 
   _renderSignupLink() {
     return (
-      <TouchableHighlight
-        style={styles.signupButton}
-        >
+      <TouchableHighlight style={styles.signupButton}>
         <Text style={styles.signupText}>SIGN UP</Text>
       </TouchableHighlight>
     );
@@ -73,146 +89,169 @@ class SignupLoginScreen extends React.Component {
 
   _renderTermsLink() {
     return (
-      <TouchableHighlight
-        style={styles.signupButton}
-        >
+      <TouchableHighlight style={styles.signupButton}>
         <Text style={styles.signupText}>TERMS</Text>
       </TouchableHighlight>
     );
+
   }
 
   render() {
     /*
       X out to return to main feed
+      full name input field
       email input field
       password input field
       forgot password link
+      terms Link
       sign up link
     */
     return (
-      <View style={styles.container}>
+      <View style={{height: this.state.visibleHeight}}>
         <View style={styles.topNavigation}>
           {this._renderBackButton()}
         </View>
-        <View>
-          <View style={styles.inputContainer}>
+        <View style={styles.container}>
+          <View style={styles.signUpForm}>
+            <View style={styles.inputContainer}>
+                <TextInput
+                  style={styles.inputField}
+                  onChangeText={(textUsername) => this.setState({textUsername})}
+                  value={this.state.textUsername}
+                  placeholder={"Username"}
+                  autoFocus={true}
+                  autoCapitalize={'none'}
+                  autoCorrect={false}
+                  keyboardType={'default'}
+                  enablesReturnKeyAutomatically={true}
+                />
+            </View>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.inputField}
-                onChangeText={(textUsername) => this.setState({textUsername})}
-                value={this.state.textUsername}
-                placeholder={"Full Name"}
-                autoFocus={true}
-                autoCapitalize={'words'}
+                onChangeText={(textEmail) => this.setState({textEmail})}
+                value={this.state.textEmail}
+                placeholder={"E-mail"}
+                autoCapitalize={'none'}
                 autoCorrect={false}
-                keyboardType={'default'}
-            />
+                keyboardType={'email-address'}
+                enablesReturnKeyAutomatically={true}
+                />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.inputField}
+                onChangeText={(textPassword) => this.setState({textPassword})}
+                value={this.state.textPassword}
+                placeholder={"Password"}
+                autoCapitalize={"none"}
+                autoCorrect={false}
+                secureTextEntry={true}
+                enablesReturnKeyAutomatically={true}
+                />
+            </View>
+            {this._renderLoginButton()}
           </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(textEmail) => this.setState({textEmail})}
-              value={this.state.textEmail}
-              placeholder={"E-mail"}
-              autoFocus={true}
-              autoCapitalize={"none"}
-              autoCorrect={false}
-              keyboardType={'email-address'}
-            />
+          <View style={styles.bottomNavigation}>
+            {this._renderTermsLink()}
+            {this._renderSignupLink()}
           </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.inputField}
-              onChangeText={(textPassword) => this.setState({textPassword})}
-              value={this.state.textPassword}
-              placeholder={"Password"}
-              autoCapitalize={"none"}
-              autoCorrect={false}
-              secureTextEntry={true}
-            />
-          </View>
-          {this._renderLoginButton()}
-        </View>
-        <View style={styles.bottomNavigation}>
-          {this._renderTermsLink()}
-          {this._renderSignupLink()}
         </View>
       </View>
     );
   }
 }
 
-let MARGIN = 40;
+let MARGIN = 8;
 
 let styles = StyleSheet.create({
+
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between'
   },
+
   topNavigation: {
-    marginTop: MARGIN/2,
-    width: 375 - MARGIN,
+    marginTop: MARGIN*3,
+    width: 375,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
+
   bottomNavigation: {
-    marginBottom: MARGIN,
-    width: 375 - MARGIN,
+    marginBottom: MARGIN*2,
+    width: 375 - MARGIN*4,
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   backButton: {
     height: 16,
     width: 16
   },
+
   placeholderButton: {
-    height: 40,
-    width: 375 - MARGIN*2,
+    height: 48,
+    width: 375 - MARGIN*8,
     marginTop: 36
   },
-  loginButton: {
-    height: 40,
-    width: 375 - MARGIN*2,
-    marginTop: 36,
-    borderRadius: 20,
-    backgroundColor: Colors.darker,
+
+  signUpForm: {
     flex: 1,
+    justifyContent: 'center'
+  },
+
+  loginButton: {
+    borderRadius: 24,
+    height: 48,
+    width: 375 - MARGIN*8,
+    marginTop: 36,
+    backgroundColor: Colors.darker,
     alignItems: 'center',
     justifyContent: 'center'
   },
+
   loginText: {
     fontSize: 12,
     letterSpacing: 1,
     fontWeight: '700',
     color: Colors.white
   },
+
   signupText: {
+    color: Colors.darker,
     fontSize: 12,
     letterSpacing: 1,
-    fontWeight: '700',
-    color: Colors.darker
+    fontWeight: '700'
   },
+
   signupButton: {
 
   },
+
   inputField: {
     height: 48,
-    width: 295,
     fontFamily: 'Gill Sans',
     fontSize: 16,
-    fontWeight: '500'
+    fontWeight: '500',
+    paddingTop: 16,
+    width: 375 - MARGIN*8
   },
+
   inputContainer: {
     borderBottomColor: Colors.lightGray,
     borderBottomWidth: 2
   },
+
   iconNavLogo: {
     alignItems: 'center',
     width: 28,
     height: 28,
     margin: 10,
     marginTop: 26,
-  },
+  }
+
 });
 
 module.exports = SignupLoginScreen;
