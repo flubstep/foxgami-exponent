@@ -19,31 +19,6 @@ let FoxgamiApi = require('FoxgamiApi');
 
 class NavigationBarUser extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      currentUser: null,
-      loaded: false,
-    }
-  }
-
-  componentDidMount() {
-    this._fetchData();
-  }
-
-  _fetchData() {
-    FoxgamiApi.getCurrentUser()
-      .then((userInfo) => {
-        this.setState({
-          userId: userInfo.data.id,
-          profileImageUrl: userInfo.data.profile_image_url,
-          shortName: userInfo.data.short_name,
-          loaded: true,
-        });
-      })
-      .done();
-  }
-
   _renderWaiting() {
     return (
       <Text style={styles.loginText}>Loading...</Text>
@@ -52,7 +27,7 @@ class NavigationBarUser extends React.Component {
 
   _renderLogin() {
     return (
-      <TouchableHighlight style={styles.loginContainer} onPress={this.props.onlogin}>
+      <TouchableHighlight style={styles.loginContainer} onPress={this.props.onLogin}>
         <Text style={styles.loginText}>LOG IN</Text>
       </TouchableHighlight>
     );
@@ -61,15 +36,15 @@ class NavigationBarUser extends React.Component {
   _renderUser() {
     return (
       <TouchableHighlight style={styles.loginContainer} onPress={this.props.onProfile}>
-        <Text style={styles.loginText}>{this.state.shortName}</Text>
+        <Text style={styles.loginText}>{this.props.user.short_name}</Text>
       </TouchableHighlight>
     );
   }
 
   render() {
-    if (!this.state.loaded) {
+    if (!this.props.user) {
         return this._renderWaiting();
-    } else if (this.state.userId) {
+    } else if (this.props.user.id) {
         return this._renderUser();
     } else {
         return this._renderLogin();

@@ -29,9 +29,9 @@ class NavigationBar extends React.Component {
     if (this.props.showUser) {
       return (
         <NavigationBarUser
+          user={this.props.user}
           onProfile={this.props.onProfile}
           onLogin={this.props.onLogin}
-          navigator={this.props.navigator}
           />
       );
     } else {
@@ -57,6 +57,11 @@ class NavigationBar extends React.Component {
     );
   }
 }
+
+NavigationBar.defaultProps = {
+  onLogin: null,
+  onProfile: null
+};
 
 let navHeight = 24;
 
