@@ -18,6 +18,8 @@ let {
 
 let {Colors} = require('BaseStyles');
 
+let IconButton = require('IconButton');
+
 class SignupLoginScreen extends React.Component {
 
   constructor(props, context) {
@@ -29,18 +31,17 @@ class SignupLoginScreen extends React.Component {
     }
   }
 
-  _goBack() {
+  _cancel() {
     this.props.navigator.pop();
   }
 
-  _renderBackButton() {
+  _renderCancelButton() {
     return (
-      <TouchableOpacity onPress={this._goBack.bind(this)}>
-        <Image
-          style={styles.backButton}
-          source={require('../images/CancelGray.png')}
-        />
-      </TouchableOpacity>
+      <IconButton
+        style={styles.cancelButton}
+        onPress={this._cancel.bind(this)}
+        source={require('../images/Back.png')}
+      />
     );
   }
 
@@ -93,7 +94,7 @@ class SignupLoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.topNavigation}>
-          {this._renderBackButton()}
+          {this._renderCancelButton()}
         </View>
         <View style={styles.form}>
           <View style={styles.inputContainer}>
@@ -114,7 +115,6 @@ class SignupLoginScreen extends React.Component {
               onChangeText={(textEmail) => this.setState({textEmail})}
               value={this.state.textEmail}
               placeholder={"E-mail"}
-              autoFocus={true}
               autoCapitalize={'none'}
               autoCorrect={false}
               keyboardType={'email-address'}
@@ -153,8 +153,8 @@ let styles = StyleSheet.create({
   },
 
   topNavigation: {
-    marginTop: MARGIN*2,
-    width: 375 - MARGIN*4,
+    marginTop: MARGIN*3,
+    width: 375,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
@@ -166,7 +166,7 @@ let styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
 
-  backButton: {
+  cancelButton: {
     height: 16,
     width: 16
   },
@@ -178,7 +178,7 @@ let styles = StyleSheet.create({
   },
 
   form: {
-    marginTop: -MARGIN*10
+    marginTop: -MARGIN*20
   },
 
   loginButton: {
