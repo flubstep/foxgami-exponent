@@ -4,6 +4,7 @@
 
 
 var Colors = {
+  black: '#000000',
   white: '#ffffff',
   darker: '#212121',
   dark: '#333333',
@@ -12,7 +13,7 @@ var Colors = {
   orange: '#D63B27',
   green: '#2CA866',
   purple: '#5B79B0',
-  lightGray: '#EEEEEE',
+  lightGray: '#EEEEEE'
 }
 
 module.exports = {
