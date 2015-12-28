@@ -28,9 +28,9 @@ class SignupLoginScreen extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      textUsername: 'qqq',
-      textEmail: 'qqq',
-      textPassword: 'qqq',
+      textUsername: '',
+      textEmail: '',
+      textPassword: '',
       visibleHeight: Dimensions.get('window').height,
       loggedIn: false
     };

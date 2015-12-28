@@ -19,6 +19,8 @@ let {
 } = React;
 
 let {Colors} = require('BaseStyles');
+let FoxgamiApi = require('FoxgamiApi');
+
 let NavigationBar = require('NavigationBar');
 let IconButton = require('IconButton');
 
@@ -28,6 +30,11 @@ class ProfileScreen extends React.Component {
 
   _back() {
     this.props.navigator.pop();
+  }
+
+  async _logout() {
+    let result = await FoxgamiApi.removeUserAsync();
+    this._back();
   }
 
   _renderBackButton() {
@@ -51,6 +58,9 @@ class ProfileScreen extends React.Component {
         <Text>Your user id: {this.props.user.id}</Text>
         <Text>Your profile photo:</Text>
         <Image style={styles.profileImage} source={{uri: this.props.user.profile_image_url}} />
+        <TouchableHighlight onPress={this._logout.bind(this)}>
+          <Text>LOG OUT</Text>
+        </TouchableHighlight>
       </View>
     );
   }
