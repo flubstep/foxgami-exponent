@@ -4,10 +4,12 @@
 
 'use strict';
 
-let {stringify} = require('querystring');
 let React = require('react-native');
 let {AsyncStorage} = React;
 let Firebase = require('firebase');
+
+let {stringify} = require('querystring');
+let {createStore} = require('redux');
 
 let REQUEST_BASE = 'http://www.foxgami.com/api';
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
@@ -38,27 +40,54 @@ async function post(path, data) {
 
 // AUTHENTICATION
 
+const user = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_USER_FROM_API':
+      return action.user;
+    case 'REMOVE_USER':
+      return {
+        name: '',
+        userId: 0,
+        profileImageUrl: '',
+        accessToken: ''
+      };
+    default:
+      return state;
+  }
+}
+
+const currentUserStore = createStore(user);
+
 
 async function setUserFromApi(returnInfo) {
-  if (returnInfo.data && returnInfo.extra) {
+  if (returnInfo.data) {
     let user = returnInfo.data;
-    let accessToken = returnInfo.extra.session;
+    let accessToken = returnInfo.extra ? returnInfo.extra.session : null;
     if (!user) {
       throw new Error('No user object included in return.')
     }
-    if (!accessToken) {
-      throw new Error('No access token included in return.')
-    }
     // TODO: Seems weird to just make this just copy the entire struct
     // to another signature; maybe consolidate the storage.
-    await saveUserAsync({
-      username: user.name,
-      userId: user.id,
-      accessToken: accessToken,
+    if (user.id && accessToken) {
+      await saveUserAsync({
+        username: user.name,
+        userId: user.id,
+        accessToken: accessToken,
+      });
+    }
+
+    currentUserStore.dispatch({
+      type: 'SET_USER_FROM_API',
+      user: {
+        name: user.name,
+        userId: user.id,
+        profileImageUrl: user.profile_image_url,
+        accessToken: accessToken
+      }
     });
     return user;
   } else {
-    throw new Error('Invalid user object from API endpoint.');
+    throw new Error('Invalid user object from API endpoint: ' + JSON.stringify(returnInfo));
   }
 }
 
@@ -81,13 +110,28 @@ async function loginUser(email, password) {
 }
 
 
+async function logoutUser() {
+  let result = await removeUserAsync();
+  currentUserStore.dispatch({
+    'type': 'REMOVE_USER'
+  });
+}
+
+
 async function getCurrentUser() {
-  let user = await getUserAsync();
-  if (user) {
-    return get('/users', { token: user.accessToken });
+  let {accessToken} = await getUserAsync();
+  let returnInfo = await get('/users', {token: accessToken});
+  if (returnInfo) {
+    setUserFromApi(returnInfo);
   } else {
-    return get('/users');
+    throw new Error('No object returned when getting current logged in user.')
   }
+}
+
+function subscribeUser(callback) {
+  currentUserStore.subscribe(() => {
+    callback(currentUserStore.getState());
+  });
 }
 
 async function getUserAsync() {
@@ -115,7 +159,11 @@ async function getUserAsync() {
   }
 
   if (!user.userId || !user.accessToken) {
-    return null;
+    return {
+      username: null,
+      userId: 0,
+      accessToken: null
+    };
   } else {
     return user;
   }
@@ -173,8 +221,10 @@ function subscribeReaction(storyId, callback) {
 Object.assign(module.exports, {
     get,
     getCurrentUser,
+    subscribeUser,
     signupNewUser,
     loginUser,
+    logoutUser,
     addReaction,
     subscribeReaction,
     getUserAsync,

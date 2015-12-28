@@ -33,7 +33,7 @@ class ProfileScreen extends React.Component {
   }
 
   async _logout() {
-    let result = await FoxgamiApi.removeUserAsync();
+    let result = await FoxgamiApi.logoutUser();
     this._back();
   }
 
@@ -54,10 +54,10 @@ class ProfileScreen extends React.Component {
           {this._renderBackButton()}
         </View>
         <NavigationBar showUser={false} />
-        <Text>Your shortname: {this.props.user.short_name}</Text>
+        <Text>Your shortname: {this.props.user.name}</Text>
         <Text>Your user id: {this.props.user.id}</Text>
         <Text>Your profile photo:</Text>
-        <Image style={styles.profileImage} source={{uri: this.props.user.profile_image_url}} />
+        <Image style={styles.profileImage} source={{uri: this.props.user.profileImageUrl}} />
         <TouchableHighlight onPress={this._logout.bind(this)}>
           <Text>LOG OUT</Text>
         </TouchableHighlight>

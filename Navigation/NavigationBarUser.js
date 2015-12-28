@@ -36,7 +36,7 @@ class NavigationBarUser extends React.Component {
   _renderUser() {
     return (
       <TouchableHighlight style={styles.loginContainer} onPress={this.props.onProfile}>
-        <Text style={styles.loginText}>{this.props.user.short_name}</Text>
+        <Text style={styles.loginText}>{this.props.user.name}</Text>
       </TouchableHighlight>
     );
   }
@@ -44,7 +44,7 @@ class NavigationBarUser extends React.Component {
   render() {
     if (!this.props.user) {
         return this._renderWaiting();
-    } else if (this.props.user.id) {
+    } else if (this.props.user.userId) {
         return this._renderUser();
     } else {
         return this._renderLogin();

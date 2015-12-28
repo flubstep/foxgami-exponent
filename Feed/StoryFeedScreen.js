@@ -57,13 +57,11 @@ class StoryFeedScreen extends React.Component {
       })
       .done();
 
-    FoxgamiApi.getCurrentUser()
-      // TODO: this JSONAPI stuff is confusing and should be the straight
-      // logged in user object
-      .then((userInfo) => {
-        this.setState({currentUser: userInfo.data});
-      })
-      .done();
+    FoxgamiApi.subscribeUser((user) => {
+      this.setState({ currentUser: user });
+    });
+
+    FoxgamiApi.getCurrentUser();
   }
 
   _showLogin() {
