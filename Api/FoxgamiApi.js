@@ -39,12 +39,7 @@ async function post(path, data) {
 // AUTHENTICATION
 
 
-async function signupNewUser(username, email, password) {
-  let returnInfo = await post('/users', {
-    name: username,
-    email: email,
-    password: password
-  });
+async function setUserFromApi(returnInfo) {
   if (returnInfo.data && returnInfo.extra) {
     let user = returnInfo.data;
     let accessToken = returnInfo.extra.session;
@@ -63,8 +58,26 @@ async function signupNewUser(username, email, password) {
     });
     return user;
   } else {
-    throw new Error('Invalid return info from signup endpoint.');
+    throw new Error('Invalid user object from API endpoint.');
   }
+}
+
+
+async function signupNewUser(username, email, password) {
+  let returnInfo = await post('/users', {
+    name: username,
+    email: email,
+    password: password
+  });
+  return await setUserFromApi(returnInfo);
+}
+
+
+async function loginUser(email, password) {
+  let returnInfo = await post('/login', {
+    email, password
+  });
+  return await setUserFromApi(returnInfo);
 }
 
 
@@ -161,6 +174,7 @@ Object.assign(module.exports, {
     get,
     getCurrentUser,
     signupNewUser,
+    loginUser,
     addReaction,
     subscribeReaction,
     getUserAsync,

@@ -67,6 +67,20 @@ class SignupLoginScreen extends React.Component {
     }
   }
 
+  async _login() {
+    let userInfo = await FoxgamiApi.loginUser(
+      this.state.textEmail,
+      this.state.textPassword
+    );
+    if (userInfo) {
+      this.setState({ loggedIn: true });
+      this._back();
+    } else {
+      // TODO: generic error handling here too
+      console.warn('Login failed.');
+    }
+  }
+
   _back() {
     this.props.navigator.pop();
   }
@@ -84,7 +98,7 @@ class SignupLoginScreen extends React.Component {
   _renderLoginButton() {
     if (this.state.textUsername && this.state.textEmail && this.state.textPassword) {
       return (
-        <TouchableHighlight style={styles.loginButton}>
+        <TouchableHighlight style={styles.loginButton} onPress={this._login.bind(this)}>
           <Text style={styles.loginText}>LOG IN</Text>
         </TouchableHighlight>
       );
