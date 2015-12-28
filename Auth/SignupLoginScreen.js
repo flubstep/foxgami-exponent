@@ -21,17 +21,19 @@ let {
 let {Colors} = require('BaseStyles');
 
 let IconButton = require('IconButton');
+let FoxgamiApi = require('FoxgamiApi');
 
 class SignupLoginScreen extends React.Component {
 
   constructor(props, context) {
     super(props, context);
     this.state = {
-      textUsername: '',
-      textEmail: '',
-      textPassword: '',
-      visibleHeight: Dimensions.get('window').height
-    }
+      textUsername: 'qqq',
+      textEmail: 'qqq',
+      textPassword: 'qqq',
+      visibleHeight: Dimensions.get('window').height,
+      loggedIn: false
+    };
   }
 
   componentWillMount () {
@@ -48,19 +50,34 @@ class SignupLoginScreen extends React.Component {
     this.setState({visibleHeight: Dimensions.get('window').height})
   }
 
+  async _signup() {
+    let userInfo = await FoxgamiApi.signupNewUser(
+      this.state.textUsername,
+      this.state.textEmail,
+      this.state.textPassword
+    );
+    if (userInfo) {
+      this.setState({ loggedIn: true });
+      // TODO: uncomfortable setting state here
+      this._back();
+    } else {
+      // TODO: error handling here, such as signup failures that
+      // can only be done server side.
+      console.warn('Signup failed.');
+    }
+  }
+
   _back() {
     this.props.navigator.pop();
   }
 
   _renderBackButton() {
     return (
-      <TouchableOpacity onPress={this._onPressButton}>
-        <IconButton
-          style={styles.backButton}
-          onPress={this._back.bind(this)}
-          source={require('../images/Back.png')}
-          />
-      </TouchableOpacity>
+      <IconButton
+        style={styles.backButton}
+        onPress={this._back.bind(this)}
+        source={require('../images/Back.png')}
+        />
     );
   }
 
@@ -81,7 +98,7 @@ class SignupLoginScreen extends React.Component {
 
   _renderSignupLink() {
     return (
-      <TouchableHighlight style={styles.signupButton}>
+      <TouchableHighlight style={styles.signupButton} onPress={this._signup.bind(this)}>
         <Text style={styles.signupText}>SIGN UP</Text>
       </TouchableHighlight>
     );
