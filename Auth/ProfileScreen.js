@@ -7,7 +7,6 @@
 let React = require('react-native');
 let {
   AppRegistry,
-  DeviceEventEmitter,
   Dimensions,
   StyleSheet,
   Text,
@@ -33,13 +32,11 @@ class ProfileScreen extends React.Component {
 
   _renderBackButton() {
     return (
-      <TouchableOpacity onPress={this._onPressButton}>
-        <IconButton
-          style={styles.backButton}
-          onPress={this._back.bind(this)}
-          source={require('../images/Back.png')}
-          />
-      </TouchableOpacity>
+      <IconButton
+        style={styles.backButton}
+        onPress={this._back.bind(this)}
+        source={require('../images/Back.png')}
+        />
     );
   }
 

@@ -7,7 +7,6 @@
 let React = require('react-native');
 let {
   AppRegistry,
-  DeviceEventEmitter,
   Dimensions,
   StyleSheet,
   Text,
