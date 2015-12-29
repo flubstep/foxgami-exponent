@@ -10,6 +10,7 @@ let Firebase = require('firebase');
 
 let {stringify} = require('querystring');
 let {createStore} = require('redux');
+let {uniq, min} = require('lodash');
 
 let REQUEST_BASE = 'http://www.foxgami.com/api';
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
@@ -118,7 +119,7 @@ async function logoutUser() {
 }
 
 
-async function getCurrentUser() {
+async function fetchCurrentUser() {
   let {accessToken} = await getUserAsync();
   let returnInfo = await get('/users', {token: accessToken});
   if (returnInfo) {
@@ -127,6 +128,7 @@ async function getCurrentUser() {
     throw new Error('No object returned when getting current logged in user.')
   }
 }
+
 
 function subscribeUser(callback) {
   currentUserStore.subscribe(() => {
@@ -218,9 +220,50 @@ function subscribeReaction(storyId, callback) {
 }
 
 
+// STORY FEED OBJECTS
+
+const storyList = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_STORIES':
+      return uniq(state.concat(action.stories), 'id');
+    default:
+      return state;
+  }
+}
+
+const storiesStore = createStore(storyList);
+
+
+async function fetchStories() {
+  let stories = storiesStore.getState();
+  let apiQuery = {};
+  if (stories.length > 0) {
+    let earliestStory = min(stories, (story) => {
+      return (new Date(story.submitted_at)).getTime();
+    });
+    if (earliestStory) {
+      apiQuery.before = earliestStory.id;
+    }
+  }
+  let storyResults = await get('/stories', apiQuery);
+  storiesStore.dispatch({
+    'type': 'ADD_STORIES',
+    'stories': storyResults
+  });
+}
+
+
+function subscribeStories(callback) {
+  // TODO: consolidate this with the Redux store for current user
+  storiesStore.subscribe(() => {
+    callback(storiesStore.getState());
+  });
+}
+
+
 Object.assign(module.exports, {
     get,
-    getCurrentUser,
+    fetchCurrentUser,
     subscribeUser,
     signupNewUser,
     loginUser,
@@ -229,5 +272,7 @@ Object.assign(module.exports, {
     subscribeReaction,
     getUserAsync,
     saveUserAsync,
-    removeUserAsync
+    removeUserAsync,
+    fetchStories,
+    subscribeStories
 });

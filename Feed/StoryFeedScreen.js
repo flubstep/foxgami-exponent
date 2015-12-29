@@ -44,24 +44,20 @@ class StoryFeedScreen extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchData();
-  }
-
-  _fetchData() {
-    FoxgamiApi.get('/stories')
-      .then((responseData) => {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData),
-          loaded: true,
-        });
-      })
-      .done();
+    // TODO: This should be under one state
+    FoxgamiApi.subscribeStories((stories) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(stories),
+        loaded: true
+      });
+    });
 
     FoxgamiApi.subscribeUser((user) => {
       this.setState({ currentUser: user });
     });
 
-    FoxgamiApi.getCurrentUser();
+    FoxgamiApi.fetchStories();
+    FoxgamiApi.fetchCurrentUser();
   }
 
   _showLogin() {
@@ -75,8 +71,6 @@ class StoryFeedScreen extends React.Component {
     this.props.navigator.push({
       title: "Profile",
       component: ProfileScreen,
-      // TODO: this doesn't follow the right pattern of data access
-      // and won't update the screen whenever current user changes
       passProps: { user: this.state.currentUser }
     });
   }
@@ -100,6 +94,7 @@ class StoryFeedScreen extends React.Component {
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}
+            onEndReached={FoxgamiApi.fetchStories}
           />
         </View>
       </View>
