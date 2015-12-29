@@ -55,7 +55,7 @@ class ProfileScreen extends React.Component {
         </View>
         <NavigationBar showUser={false} />
         <Text>Your shortname: {this.props.user.name}</Text>
-        <Text>Your user id: {this.props.user.id}</Text>
+        <Text>Your user id: {this.props.user.userId}</Text>
         <Text>Your profile photo:</Text>
         <Image style={styles.profileImage} source={{uri: this.props.user.profileImageUrl}} />
         <TouchableHighlight onPress={this._logout.bind(this)}>
