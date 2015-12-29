@@ -118,7 +118,7 @@ async function logoutUser() {
 }
 
 
-async function getCurrentUser() {
+async function fetchCurrentUser() {
   let {accessToken} = await getUserAsync();
   let returnInfo = await get('/users', {token: accessToken});
   if (returnInfo) {
@@ -127,6 +127,7 @@ async function getCurrentUser() {
     throw new Error('No object returned when getting current logged in user.')
   }
 }
+
 
 function subscribeUser(callback) {
   currentUserStore.subscribe(() => {
@@ -218,9 +219,45 @@ function subscribeReaction(storyId, callback) {
 }
 
 
+// STORY FEED OBJECTS
+
+const storyList = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_STORIES':
+      return state.concat(action.stories);
+    default:
+      return state;
+  }
+}
+
+const storiesStore = createStore(storyList);
+
+
+async function fetchStories() {
+  let state = storiesStore.getState();
+  let apiQuery = {};
+  if (state.length > 0) {
+    // TODO: include 'after' query here
+  }
+  let storyResults = await get('/stories', apiQuery);
+  storiesStore.dispatch({
+    'type': 'ADD_STORIES',
+    'stories': storyResults
+  });
+}
+
+
+function subscribeStories(callback) {
+  // TODO: consolidate this with the Redux store for current user
+  storiesStore.subscribe(() => {
+    callback(storiesStore.getState());
+  });
+}
+
+
 Object.assign(module.exports, {
     get,
-    getCurrentUser,
+    fetchCurrentUser,
     subscribeUser,
     signupNewUser,
     loginUser,
@@ -229,5 +266,7 @@ Object.assign(module.exports, {
     subscribeReaction,
     getUserAsync,
     saveUserAsync,
-    removeUserAsync
+    removeUserAsync,
+    fetchStories,
+    subscribeStories
 });
