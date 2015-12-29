@@ -10,7 +10,7 @@ let Firebase = require('firebase');
 
 let {stringify} = require('querystring');
 let {createStore} = require('redux');
-let {uniq} = require('lodash');
+let {uniq, min} = require('lodash');
 
 let REQUEST_BASE = 'http://www.foxgami.com/api';
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
@@ -225,7 +225,7 @@ function subscribeReaction(storyId, callback) {
 const storyList = (state = [], action) => {
   switch (action.type) {
     case 'ADD_STORIES':
-      return uniq(state.concat(action.stories));
+      return uniq(state.concat(action.stories), 'id');
     default:
       return state;
   }
@@ -235,10 +235,15 @@ const storiesStore = createStore(storyList);
 
 
 async function fetchStories() {
-  let state = storiesStore.getState();
+  let stories = storiesStore.getState();
   let apiQuery = {};
-  if (state.length > 0) {
-    // TODO: include 'after' query here
+  if (stories.length > 0) {
+    let earliestStory = min(stories, (story) => {
+      return (new Date(story.submitted_at)).getTime();
+    });
+    if (earliestStory) {
+      apiQuery.before = earliestStory.id;
+    }
   }
   let storyResults = await get('/stories', apiQuery);
   storiesStore.dispatch({

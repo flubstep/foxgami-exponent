@@ -94,6 +94,7 @@ class StoryFeedScreen extends React.Component {
           <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}
+            onEndReached={FoxgamiApi.fetchStories}
           />
         </View>
       </View>
