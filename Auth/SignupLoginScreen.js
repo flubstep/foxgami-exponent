@@ -21,6 +21,7 @@ let {
 let {Colors} = require('BaseStyles');
 
 let IconButton = require('IconButton');
+let FoxgamiApi = require('FoxgamiApi');
 
 class SignupLoginScreen extends React.Component {
 
@@ -30,8 +31,9 @@ class SignupLoginScreen extends React.Component {
       textUsername: '',
       textEmail: '',
       textPassword: '',
-      visibleHeight: Dimensions.get('window').height
-    }
+      visibleHeight: Dimensions.get('window').height,
+      loggedIn: false
+    };
   }
 
   componentWillMount () {
@@ -48,26 +50,55 @@ class SignupLoginScreen extends React.Component {
     this.setState({visibleHeight: Dimensions.get('window').height})
   }
 
+  async _signup() {
+    let userInfo = await FoxgamiApi.signupNewUser(
+      this.state.textUsername,
+      this.state.textEmail,
+      this.state.textPassword
+    );
+    if (userInfo) {
+      this.setState({ loggedIn: true });
+      // TODO: uncomfortable setting state here
+      this._back();
+    } else {
+      // TODO: error handling here, such as signup failures that
+      // can only be done server side.
+      console.warn('Signup failed.');
+    }
+  }
+
+  async _login() {
+    let userInfo = await FoxgamiApi.loginUser(
+      this.state.textEmail,
+      this.state.textPassword
+    );
+    if (userInfo) {
+      this.setState({ loggedIn: true });
+      this._back();
+    } else {
+      // TODO: generic error handling here too
+      console.warn('Login failed.');
+    }
+  }
+
   _back() {
     this.props.navigator.pop();
   }
 
   _renderBackButton() {
     return (
-      <TouchableOpacity onPress={this._onPressButton}>
-        <IconButton
-          style={styles.backButton}
-          onPress={this._back.bind(this)}
-          source={require('../images/Back.png')}
-          />
-      </TouchableOpacity>
+      <IconButton
+        style={styles.backButton}
+        onPress={this._back.bind(this)}
+        source={require('../images/Back.png')}
+        />
     );
   }
 
   _renderLoginButton() {
     if (this.state.textUsername && this.state.textEmail && this.state.textPassword) {
       return (
-        <TouchableHighlight style={styles.loginButton}>
+        <TouchableHighlight style={styles.loginButton} onPress={this._login.bind(this)}>
           <Text style={styles.loginText}>LOG IN</Text>
         </TouchableHighlight>
       );
@@ -81,7 +112,7 @@ class SignupLoginScreen extends React.Component {
 
   _renderSignupLink() {
     return (
-      <TouchableHighlight style={styles.signupButton}>
+      <TouchableHighlight style={styles.signupButton} onPress={this._signup.bind(this)}>
         <Text style={styles.signupText}>SIGN UP</Text>
       </TouchableHighlight>
     );

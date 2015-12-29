@@ -11,6 +11,7 @@
     "react-native": "exponentjs/react-native#2015-11-13",
     "react-native-fbsdkcore": "0.0.7",
     "react-timer-mixin": "^0.13.3",
+    "redux": "^3.0.4",
     "timeago": "^0.2.0"
   }
 }
