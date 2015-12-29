@@ -10,6 +10,7 @@ let Firebase = require('firebase');
 
 let {stringify} = require('querystring');
 let {createStore} = require('redux');
+let {uniq} = require('lodash');
 
 let REQUEST_BASE = 'http://www.foxgami.com/api';
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
@@ -224,7 +225,7 @@ function subscribeReaction(storyId, callback) {
 const storyList = (state = [], action) => {
   switch (action.type) {
     case 'ADD_STORIES':
-      return state.concat(action.stories);
+      return uniq(state.concat(action.stories));
     default:
       return state;
   }

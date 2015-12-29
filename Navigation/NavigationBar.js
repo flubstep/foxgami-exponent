@@ -17,10 +17,6 @@ let {
   Modal
 } = React;
 
-let FBSDKCore = require('react-native-fbsdkcore');
-let {FBSDKGraphRequest} = FBSDKCore;
-let FacebookLoginManager = require('NativeModules').FacebookLoginManager;
-
 let {Colors} = require('BaseStyles');
 
 let NavigationBarUser = require('NavigationBarUser');
