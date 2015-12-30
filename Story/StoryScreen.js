@@ -15,7 +15,8 @@ let {
   PanResponder,
   PropTypes,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  Animated
 } = React;
 
 let ReactART = require('ReactNativeART');
@@ -39,6 +40,21 @@ let Firebase = require('firebase');
 let rootRef = new Firebase('https://foxgami.firebaseio.com/');
 
 let IconButton = require('IconButton');
+
+const DUMMY_PROFILE_URLS = [
+    "http://www.foxgami.com/images/fox-portrait.png",
+    "http://www.foxgami.com/images/ness-portrait.png",
+    "http://www.foxgami.com/images/samus-portrait.png",
+    "http://www.foxgami.com/images/peach-portrait.png",
+    "http://www.foxgami.com/images/mario-portrait.png",
+    "http://www.foxgami.com/images/charizard-portrait.png",
+    "http://www.foxgami.com/images/pikachu-portrait.png",
+    "http://www.foxgami.com/images/kirby-portrait.png",
+    "http://www.foxgami.com/images/jigglypuff-portrait.png",
+    "http://www.foxgami.com/images/yoshi-portrait.png",
+    "http://www.foxgami.com/images/roy-portrait.png",
+    "http://www.foxgami.com/images/link-portrait.png"
+];
 
 function pointsToSvg(points) {
   if (points.length > 0) {
@@ -361,20 +377,45 @@ var FoxgamiReplaySurface = React.createClass({
 
 class FoxgamiReactionPlayer extends React.Component {
 
+  constructor(props, context)  {
+    super(props, context);
+    this.state = {
+      bounceValue: new Animated.Value(0)
+    };
+  }
+
+  componentDidMount() {
+    this.state.bounceValue.setValue(0.3);
+    Animated.spring(
+      this.state.bounceValue, {
+        toValue: 1.0,
+        friction: 3.0
+      }
+    ).start();
+  }
+
   play() {
     this.props.playReaction(this.props.reaction.copy());
   }
 
   render() {
+    let profileIndex = (this.props.replayIndex % DUMMY_PROFILE_URLS.length);
+    let profileUrl = DUMMY_PROFILE_URLS[profileIndex];
     return (
       <TouchableOpacity onPress={this.play.bind(this)}>
-        <View style={styles.replayIcon}>
-          <Text style={styles.replayKey}>{this.props.replayIndex}</Text>
-        </View>
+        <Animated.Image style={[
+          styles.replayIcon,
+          {
+            transform: [{
+              scale: this.state.bounceValue
+            }]
+          }
+        ]}
+        source={{uri: profileUrl}}
+        />
       </TouchableOpacity>
     );
   }
-
 }
 
 
@@ -576,8 +617,7 @@ let styles = StyleSheet.create({
     width: iconSize,
     borderRadius: iconSize / 2,
     marginTop: 0,
-    marginRight: 12,
-    backgroundColor: Colors.purple
+    marginRight: 12
   },
   replayKey: {
     textAlign: "center",
