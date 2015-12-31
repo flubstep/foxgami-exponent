@@ -8,16 +8,20 @@ let timeago = require('timeago');
 let React = require('react-native');
 let {
   AppRegistry,
+  ActivityIndicatorIOS,
+  Dimensions,
   StyleSheet,
   Text,
   View,
   Image,
   ListView,
+  ScrollView,
   StatusBarIOS,
   TouchableHighlight,
   Modal
 } = React;
 
+let RefreshableListView = require('react-native-refreshable-listview');
 
 let {Colors} = require('BaseStyles');
 let FoxgamiApi = require('FoxgamiApi');
@@ -39,6 +43,7 @@ class StoryFeedScreen extends React.Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       loaded: false,
+      visibleWidth: Dimensions.get('window').width,
       currentUser: null
     }
   }
@@ -81,6 +86,20 @@ class StoryFeedScreen extends React.Component {
     );
   }
 
+  _renderRefreshIndicator(loadingIndicator) {
+
+    return (
+      <View style={{
+          width: this.state.visibleWidth,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+        <RefreshableListView.RefreshingIndicator />
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -90,10 +109,13 @@ class StoryFeedScreen extends React.Component {
             showUser={true}
             onLogin={this._showLogin.bind(this)}
             onProfile={this._showProfile.bind(this)}
+            height={24}
           />
-          <ListView
+          <RefreshableListView
+            loadData={FoxgamiApi.refreshStories}
             dataSource={this.state.dataSource}
             renderRow={this._renderStory.bind(this)}
+            refreshingIndictatorComponent={this._renderRefreshIndicator.bind(this)}
             onEndReached={FoxgamiApi.fetchStories}
           />
         </View>
@@ -111,7 +133,7 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.white,
     borderRadius: 6,
-    flex: 1,
+    flex: 1
   }
 });
 

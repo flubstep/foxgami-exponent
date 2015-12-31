@@ -226,12 +226,23 @@ const storyList = (state = [], action) => {
   switch (action.type) {
     case 'ADD_STORIES':
       return uniq(state.concat(action.stories), 'id');
+    case 'SET_STORIES':
+      return action.stories;
     default:
       return state;
   }
 }
 
 const storiesStore = createStore(storyList);
+
+
+async function refreshStories() {
+  let storyResults = await get('/stories', {});
+  storiesStore.dispatch({
+    'type': 'SET_STORIES',
+    'stories': storyResults
+  });
+}
 
 
 async function fetchStories() {
@@ -274,5 +285,6 @@ Object.assign(module.exports, {
     saveUserAsync,
     removeUserAsync,
     fetchStories,
+    refreshStories,
     subscribeStories
 });
