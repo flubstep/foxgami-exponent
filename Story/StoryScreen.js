@@ -386,10 +386,10 @@ class FoxgamiReactionPlayer extends React.Component {
 
   componentDidMount() {
     this.state.bounceValue.setValue(0.3);
-    Animated.spring(
+    Animated.timing(
       this.state.bounceValue, {
-        toValue: 1.0,
-        friction: 3.0
+        duration: 400,
+        toValue: 1.0
       }
     ).start();
   }
