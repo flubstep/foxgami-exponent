@@ -52,7 +52,11 @@ class NavigationBar extends React.Component {
         <View style={styles.topNavigation}>
           <Text style={styles.invisible}>Login</Text>
           <Image
-            style={styles.iconNavLogo}
+            style={[styles.iconNavLogo,
+              {
+                height: this.props.height,
+                width: this.props.height
+              }]}
             source={require('../images/logo.png')}
           />
           {this._renderUser()}
@@ -63,13 +67,13 @@ class NavigationBar extends React.Component {
   }
 }
 
+let MARGIN = 8;
+
 NavigationBar.defaultProps = {
   onLogin: null,
-  onProfile: null
+  onProfile: null,
+  height: 24
 };
-
-let MARGIN = 8;
-let navHeight = 24;
 
 let styles = StyleSheet.create({
 
@@ -88,8 +92,6 @@ let styles = StyleSheet.create({
 
   iconNavLogo: {
     alignItems: 'center',
-    width: navHeight,
-    height: navHeight,
     margin: MARGIN
   },
 
@@ -98,13 +100,6 @@ let styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     letterSpacing: 1,
-  },
-
-  loginContainer: {
-    marginTop: 20, // TODO: fix this
-    height: navHeight,
-    alignItems: 'center',
-    flexDirection: 'row'
   }
 
 });
