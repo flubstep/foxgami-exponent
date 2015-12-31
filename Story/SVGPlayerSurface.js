@@ -18,6 +18,13 @@ class SVGPlayerSurface extends SVGSurface {
     this.setInterval(this.onTick, 20);
   }
 
+  onResponderRelease(evt, gestureState) {
+    if (gestureState.dx > 120 &&
+        Math.abs(gestureState.dy) < Math.abs(gestureState.dx)) {
+      this.props.onSwipeRight();
+    }
+  }
+
   onTick() {
     if (!this.props.reaction) {
       return;
@@ -53,6 +60,10 @@ class SVGPlayerSurface extends SVGSurface {
     }
     this.setState(nextState);
   }
+}
+
+SVGPlayerSurface.defaultProps = {
+  onSwipeRight: (() => {})
 }
 
 // TODO: Not sure what to do to get the decorator to work

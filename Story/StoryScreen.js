@@ -109,6 +109,7 @@ class StoryScreen extends React.Component {
         <SVGPlayerSurface
           key={new Date()}
           reaction={this.state.playingReaction}
+          onSwipeRight={this.props.navigator.pop}
           >
           <StoryPlayingHeader
             onPressDraw={this._startDrawing.bind(this)}

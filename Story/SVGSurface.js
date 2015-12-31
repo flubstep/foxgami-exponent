@@ -8,7 +8,8 @@ let React = require('react-native');
 let {
   View,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  PanResponder
 } = React;
 
 let ReactART = require('ReactNativeART');
@@ -32,6 +33,13 @@ class SVGSurface extends React.Component {
       visibleWidth: Dimensions.get('window').width,
       visibleHeight: Dimensions.get('window').height,
     };
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gs) => true,
+      onMoveShouldSetPanResponder: (evt, gs) => true,
+      onPanResponderGrant: (evt, gs) => this.onResponderGrant(evt, gs),
+      onPanResponderMove: (evt, gs) => this.onResponderMove(evt, gs),
+      onPanResponderRelease: (evt, gs) => this.onResponderRelease(evt, gs)
+    });
   }
 
   onResponderGrant() {
@@ -50,11 +58,7 @@ class SVGSurface extends React.Component {
     return (
       <View style={styles.drawContainer}>
         <View
-            onStartShouldSetResponder={(evt) => true}
-            onMoveShouldSetResponder={(evt) => true}
-            onResponderGrant={this.onResponderGrant.bind(this)}
-            onResponderMove={this.onResponderMove.bind(this)}
-            onResponderRelease={this.onResponderRelease.bind(this)}
+          {...this._panResponder.panHandlers}
           >
           <Surface
             style={styles.drawSurface}
