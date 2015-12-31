@@ -3,7 +3,7 @@
  */
 
 
-var Colors = {
+let Colors = {
   black: '#000000',
   white: '#ffffff',
   darker: '#212121',
@@ -13,9 +13,18 @@ var Colors = {
   orange: '#D63B27',
   green: '#2CA866',
   purple: '#5B79B0',
-  lightGray: '#EEEEEE'
-}
+  lightGray: '#EEEEEE',
+  transparent: 'rgba(0,0,0,0)'
+};
+
+
+let Sizes = {
+  replayIconSize: 48,
+  navHeight: 24
+};
+
 
 module.exports = {
-  Colors: Colors
-}
+  Colors,
+  Sizes
+};

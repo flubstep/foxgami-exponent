@@ -9,6 +9,7 @@
     "firebase": "^2.3.2",
     "lodash": "^3.10.1",
     "querystring": "^0.2.0",
+    "react-mixin": "^3.0.3",
     "react-native": "exponentjs/react-native#2015-11-13",
     "react-timer-mixin": "^0.13.3",
     "redux": "^3.0.4",
