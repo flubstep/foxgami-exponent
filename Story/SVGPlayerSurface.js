@@ -19,7 +19,7 @@ class SVGPlayerSurface extends SVGSurface {
   }
 
   onResponderRelease(evt, gestureState) {
-    if (gestureState.dx > 120 &&
+    if (gestureState.dx > 100 &&
         Math.abs(gestureState.dy) < Math.abs(gestureState.dx)) {
       this.props.onSwipeRight();
     }
