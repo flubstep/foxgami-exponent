@@ -15,6 +15,7 @@ let {
   ListView,
   StatusBarIOS,
   TouchableHighlight,
+  TouchableOpacity,
   Modal
 } = React;
 
@@ -73,7 +74,9 @@ class StoryFeedItem extends React.Component {
         <Text style={[styles.medium, styles.baseText]}>{this.props.story.title}</Text>
         <View style={styles.storyRow}>
           <View style={styles.storyRowInfo}>
-            <Text style={[styles.small, styles.baseText]}>{this.state.numReactions} reactions</Text>
+            <TouchableOpacity onPress={this._selectStory.bind(this)}>
+              <Text style={[styles.small, styles.baseText]}>{this.state.numReactions} reactions</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.storyRowIcons}>
             <IconButton
