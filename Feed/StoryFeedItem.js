@@ -15,8 +15,7 @@ let {
   ListView,
   StatusBarIOS,
   TouchableHighlight,
-  TouchableOpacity,
-  Modal
+  TouchableOpacity
 } = React;
 
 
@@ -25,6 +24,7 @@ let FoxgamiApi = require('FoxgamiApi');
 
 let StoryScreen = require('StoryScreen');
 let IconButton = require('IconButton');
+let ShareIconButton = require('ShareIconButton');
 
 class StoryFeedItem extends React.Component {
 
@@ -36,14 +36,9 @@ class StoryFeedItem extends React.Component {
   }
 
   componentDidMount() {
-    this._fetchData();
-  }
-
-  _fetchData() {
     FoxgamiApi.subscribeReaction(this.props.story.id, (reactions) => {
-      let numReactions = reactions.length;
       this.setState({
-        numReactions
+        numReactions: reactions.length
       });
     });
   }
@@ -65,7 +60,8 @@ class StoryFeedItem extends React.Component {
       <View style={{flex: 1}}>
         <TouchableHighlight
           style={styles.wrapper}
-          onPress={() => this._selectStory(this.props.story)}>
+          onPress={this._doNothing.bind(this)}
+          >
           <Image
             style={styles.storyImage}
             source={{uri: this.props.story.image_url}}
@@ -79,9 +75,8 @@ class StoryFeedItem extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.storyRowIcons}>
-            <IconButton
-              onPress={this._doNothing.bind(this)}
-              source={require('../images/ShareGray.png')}
+            <ShareIconButton
+              story={this.props.story}
               />
             <IconButton
               onPress={this._doNothing.bind(this)}

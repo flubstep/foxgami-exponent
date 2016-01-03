@@ -272,6 +272,66 @@ function subscribeStories(callback) {
 }
 
 
+// SHARING OBJECTS
+
+const shareWindow = (state = {}, action) => {
+  switch (action.type) {
+    case 'TOGGLE_SHARING':
+      return Object.assign({}, state, {
+        active: !state.active,
+        share: action.share
+      });
+    case 'MOVE_SHARING':
+      return Object.assign({}, state, {
+        shareButtonX: action.shareButtonX,
+        shareButtonY: action.shareButtonY
+      });
+    case 'DISMISS_SHARING':
+      return Object.assign({}, state, {
+        active: false
+      });
+    default:
+      return state;
+  }
+}
+
+
+let shareWindowStore = createStore(shareWindow);
+
+
+function toggleSharing(share, shareButtonX, shareButtonY) {
+  shareWindowStore.dispatch({
+    type: 'TOGGLE_SHARING',
+    share: share,
+    shareButtonX: shareButtonX,
+    shareButtonY: shareButtonY
+  });
+}
+
+
+function dismissSharing() {
+  shareWindowStore.dispatch({
+    'type': 'DISMISS_SHARING'
+  });
+}
+
+
+function moveSharing(shareButtonX, shareButtonY) {
+  shareWindowStore.dispatch({
+    type: 'MOVE_SHARING',
+    shareButtonX: shareButtonX,
+    shareButtonY: shareButtonY
+  });
+}
+
+
+function subscribeSharing(callback) {
+  shareWindowStore.subscribe(() => {
+    callback(shareWindowStore.getState());
+  });
+}
+
+
 Object.assign(module.exports, {
     get,
     fetchCurrentUser,
@@ -286,5 +346,9 @@ Object.assign(module.exports, {
     removeUserAsync,
     fetchStories,
     refreshStories,
-    subscribeStories
+    subscribeStories,
+    toggleSharing,
+    moveSharing,
+    dismissSharing,
+    subscribeSharing
 });
