@@ -24,14 +24,24 @@ class IconButton extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.iconButton} onPress={this.props.onPress}>
-        <Image style={styles.icon} source={this.props.source} />
+      <TouchableOpacity
+        style={styles.iconButton}
+        onPress={this.props.onPress}
+        onPressIn={this.props.onPressIn}
+        >
+        <Image
+          style={styles.icon}
+          source={this.props.source}
+          />
       </TouchableOpacity>
     )
   }
 }
 
-let iconSize = 48;
+IconButton.defaultProps = {
+  onPress: (() => {}),
+  onPressIn: (() => {})
+};
 
 let styles = StyleSheet.create({
   icon: {

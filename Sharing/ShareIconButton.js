@@ -47,7 +47,7 @@ class ShareIconButton extends React.Component {
     return (
       <View ref="shareButton" style={styles.shareContainer}>
         <IconButton
-          onPress={this.showShareTargets.bind(this)}
+          onPressIn={this.showShareTargets.bind(this)}
           source={require('../images/ShareGray.png')}
           />
       </View>
