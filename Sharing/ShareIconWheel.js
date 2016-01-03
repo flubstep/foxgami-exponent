@@ -30,6 +30,21 @@ const DUMMY_PROFILE_URLS = [
     "http://www.foxgami.com/images/link-portrait.png"
 ];
 
+const positions12 = [
+  [0.5, -0.866],     // 1
+  [0, -1],           // 12 o'clock
+  [-0.5, -0.866],    // 11
+  [-0.866, -0.5],    // 10
+  [-1, 0],           // 9
+  [-0.866, 0.5],     // 8
+  [-0.5, 0.866],     // 7
+  [0, 1],            // 6
+  [0.5, 0.866],      // 5
+  [0.866, 0.5],      // 4
+  [1, 0],            // 3
+  [0.866, -0.5],     // 2
+];
+
 const positions8 = [
   [0.707, -0.707],   // NE
   [0, -1],           // N
@@ -52,11 +67,11 @@ class ShareTarget extends React.Component {
   }
 
   componentDidMount() {
-    let [proportionX, proportionY] = positions8[this.props.index];
+    let [proportionX, proportionY] = positions12[this.props.index];
     Animated.spring(this.state.position, {
       toValue: {
-        x: proportionX * Sizes.replayIconSize*2,
-        y: proportionY * Sizes.replayIconSize*2
+        x: proportionX * 140,
+        y: proportionY * 140
       },
       tension: 800,
       duration: 150

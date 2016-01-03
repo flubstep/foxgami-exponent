@@ -20,7 +20,7 @@ let Colors = {
 
 let Sizes = {
   iconSize: 24,
-  replayIconSize: 48,
+  replayIconSize: 64,
   navHeight: 24
 };
 
