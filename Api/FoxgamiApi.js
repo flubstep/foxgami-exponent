@@ -287,9 +287,13 @@ const shareWindow = (state = {}, action) => {
         shareButtonY: action.shareButtonY
       });
     case 'DISMISS_SHARING':
-      return Object.assign({}, state, {
-        active: false
-      });
+      if (state.active) {
+        return Object.assign({}, state, {
+          active: false
+        });
+      } else {
+        return state;
+      }
     default:
       return state;
   }

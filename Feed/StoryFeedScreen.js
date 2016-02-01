@@ -120,6 +120,11 @@ class StoryFeedScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <ShareStoryModal
+          visible={this.state.shareActive}
+          transparent={true}
+          shareTargets={[1, 2, 3, 4, 5, 6]}
+          />
         <View style={styles.feed}>
           <NavigationBar
             user={this.state.currentUser}
@@ -138,7 +143,7 @@ class StoryFeedScreen extends React.Component {
           />
         </View>
         <ShareIconWheel
-          visible={this.state.shareActive}
+          visible={false}
           shareTargets={[1, 2, 3, 4, 5, 6]}
           baseX={this.state.shareButtonX}
           baseY={this.state.shareButtonY}
